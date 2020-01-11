@@ -1,0 +1,12 @@
+put a a1
+put a a2
+put a a3
+put b b1
+put b b2
+put b b3
+put c c1
+put c c2
+put c c3
+get a
+get b
+get c

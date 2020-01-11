@@ -1,0 +1,5 @@
+fin = open("aplusb.in")
+fout = open("aplusb.out", "w")
+a, b = map(int, fin.readline().split())
+fout.write(str(a + b))
+fout.close()

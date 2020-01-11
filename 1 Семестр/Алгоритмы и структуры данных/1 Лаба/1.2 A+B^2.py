@@ -1,0 +1,5 @@
+fin = open("aplusbb.in")
+fout = open("aplusbb.out", "w")
+a, b = map(int, fin.readline().split())
+fout.write(str(a + b**2))
+fout.close()

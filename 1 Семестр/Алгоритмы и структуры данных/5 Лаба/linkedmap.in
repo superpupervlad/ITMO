@@ -1,0 +1,118 @@
+put zero a
+put two b
+put three c
+put four d
+put five e
+put zero e
+put five e
+put zer a1
+put ze a2
+put z a3
+delete zero
+delete zer
+delete ze
+delete z
+put zero a
+next zero
+prev zero
+get zero
+put zero a
+put two b
+put three c
+put four d
+put five e
+next zero
+prev zero
+get zero
+next two
+prev two
+get two
+next three
+prev three
+get three
+next four
+prev four
+get four
+next five
+prev five
+get five
+delete zero
+next zero
+prev zero
+get zero
+next two
+prev two
+get two
+next three
+prev three
+get three
+next four
+prev four
+get four
+next five
+prev five
+get five
+delete two
+next zero
+prev zero
+get zero
+next two
+prev two
+get two
+next three
+prev three
+get three
+next four
+prev four
+get four
+next five
+prev five
+get five
+delete three
+next zero
+prev zero
+get zero
+next two
+prev two
+get two
+next three
+prev three
+get three
+next four
+prev four
+get four
+next five
+prev five
+get five
+delete four
+next zero
+prev zero
+get zero
+next two
+prev two
+get two
+next three
+prev three
+get three
+next four
+prev four
+get four
+next five
+prev five
+get five
+delete five
+next zero
+prev zero
+get zero
+next two
+prev two
+get two
+next three
+prev three
+get three
+next four
+prev four
+get four
+next five
+prev five
+get five
