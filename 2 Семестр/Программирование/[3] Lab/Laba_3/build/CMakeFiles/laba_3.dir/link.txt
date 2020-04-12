@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/laba_3.dir/main.cpp.o  -o laba_3 
