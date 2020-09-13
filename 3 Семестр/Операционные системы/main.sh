@@ -9,10 +9,10 @@ calc(){
         echo "Я тебя сейчас на ноль поделю"
     else
         case "$1" in
-        sum | +) echo "$2 + $3 = $(($2 + $3))" ;;
-        sub | -) echo "$2 - $3 = $(($2 - $3))" ;;
-        mul | \*) echo "$2 * $3 = $(($2 * $3))" ;;
-        div | /) echo "$2 / $3 = $(($2 / $3))" ;; # | bc -l;;
+        sum | +) echo "$(($2 + $3))" ;;
+        sub | -) echo "$(($2 - $3))" ;;
+        mul | \*) echo "$(($2 * $3))" ;;
+        div | /) echo "$(($2 / $3))" ;; # | bc -l;;
         *) echo "Хватит портить прогу, нормально введи математические операции"
         esac
     fi
@@ -41,9 +41,9 @@ reverse(){
       content=$(cat "$1")
       for (( i=${#content}; i>=0; i-- )); do
           # echo without \n i letter
-          echo -n "${content:$i:1}" >> $2
+          echo -n "${content:$i:1}" >> "$2"
       done
-      echo "Done!"
+      # echo "Done!"
     else
       echo "Нет такого файла :("
     fi
@@ -59,14 +59,14 @@ log(){
     it=$(mktemp)
     for line in $content; do
         if [[ $line == *"] (WW)"* ]]; then
-            echo -e "${line/(WW)/$YELLOW Warning $NC}" >> $wt
+            echo -e "${line/(WW)/$YELLOW Warning $NC}" >> "$wt"
         elif [[ $line == *"] (II)"* ]]; then
-            echo -e "${line/(II)/$BLUE Information $NC}" >> $it
+            echo -e "${line/(II)/$BLUE Information $NC}" >> "$it"
         fi
     done
-    for i in $wt $it; do
-        cat $i
-        rm $i
+    for i in "$wt" "$it"; do
+        cat "$i"
+        rm "$i"
     done
 }
 
@@ -93,10 +93,10 @@ interactive(){
               2>&1 1>&3)
           exec 3>&-
           case $? in # exit status of dialog
-              $DIALOG_CANCEL)
+              "$DIALOG_CANCEL")
                   echo "Something went wrong :("
                   exit ;;
-              $DIALOG_ESC)
+              "$DIALOG_ESC")
                   echo "Goodbye"
                   exit ;;
           esac
@@ -154,7 +154,8 @@ reverse_int(){
     exec 3>&1
     s="$(get_input "Input source" "Reverse" "Input" 2>&1 1>&3)"
     d="$(get_input "Input destination" "Reverse" "Input" 2>&1 1>&3)"
-    show_output "$(reverse "$s" "$d")" "Reverse" "Success"
+    # show_output "$(reverse "$s" "$d")" "Reverse" "Success"
+    reverse "$s" "$d"
     exec 3>&-
 }
 
@@ -173,17 +174,17 @@ log_int(){
     ot=$(mktemp)
     for line in $content; do
         if [[ $line == *"(WW)"* ]]; then
-            echo -e "${line/(WW)/\\Z1Warning \\Zn}" >> $wt
+            echo -e "${line/(WW)/\\Z1Warning \\Zn}" >> "$wt"
         elif [[ $line == *"(II)"* ]]; then
-            echo -e "${line/(II)/\\Z3 Information \\Zn}" >> $it
+            echo -e "${line/(II)/\\Z3 Information \\Zn}" >> "$it"
         else
-            echo "$line" >> $ot
+            echo "$line" >> "$ot"
         fi
     done
-    dialog --colors --msgbox "$(cat $wt $it)" 50 50
+    dialog --colors --msgbox "$(cat "$wt" "$it")" 50 50
     for i in $wt $it $ot; do
-        cat $i
-        rm $i
+        cat "$i"
+        rm "$i"
     done
 }
 
@@ -247,7 +248,7 @@ check_progs(){
 tmp=$(mktemp)
 for i in "grep" "clear"
 do
-  hash $i 2>/dev/null || { echo -n "$i" >> $tmp; }
+  hash $i 2>/dev/null || { echo -n "$i" >> "$tmp"; }
 done
 if [[ -n $(cat "$tmp") ]]; then
   echo "Не найдены следующие комманды. Программа может работать неправильно."
@@ -262,7 +263,7 @@ hash dialog 2>/dev/null || { diacheck=1; echo "Не установлен dialog,
 check_progs
 
 case "$1" in
-    --calc | -c) [[ $# -eq 4 ]] && calc $2 $3 $4 || echo "Нужно 4 аргумента";;
+    --calc | -c) [[ $# -eq 4 ]] && calc "$2" "$3" "$4" || echo "Нужно 4 аргумента";;
     --search | -s) if [[ $# -eq 3 ]]; then search "$2" "$3"  else echo "Нужно 3 аргумента"; fi ;;
     --reverse | -r) [[ $# -eq 3 ]] && reverse "$2" "$3"  || echo "Нужно 3 аргумента" ;;
     --strlen | -n) [[ $# -eq 2 ]] && echo "Number of symbols: ${#2}"  || echo "Нужно 2 аргумента" ;;
