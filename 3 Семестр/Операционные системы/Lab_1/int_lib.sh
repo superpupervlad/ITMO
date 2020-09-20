@@ -1,48 +1,30 @@
 #!/usr/bin/env bash
 
-exit_codes=("ЗБС" \
-  "Что-то очень плохое" \
-  "Что-то башем" \
-  "Неправльное количество агрументов" \
-  "Нет такого файла или директории" \
-  "Неправильный формат аргументов" \
-  "Деление на н0ль!")
+cmd=(dialog \
+--backtitle "Interactive mode" \
+--title "Menu" \
+--clear \
+--menu "Choose wisely" 0 0 0)
+
+
 
 interactive(){
+    int_commands=()
+    input=("$@")
+    for ((i=1 ; i < $#+1 ; i++)); do
+      int_commands+=($i)
+      int_commands+=("${input[$i-1]}")
+    done
     while true; do
           exec 3>&1
-          selection=$(dialog \
-              --backtitle "Interactive mode" \
-              --title "Menu" \
-              --clear \
-              --menu "Choose wisely" 0 0 0 \
-              "c" "Calc" \
-              "s" "Search" \
-              "r" "Reverse" \
-              "n" "Strlen" \
-              "l" "Log" \
-              "e" "Exit" \
-              "h" "Help" \
-              2>&1 1>&3)
+          selection=$("${cmd[@]}" "${int_commands[@]}" 2>&1 1>&3)
           exec 3>&-
-          case $selection in
-              c) calc_int ;;
-              s) search_int ;;
-              r) reverse_int ;;
-              n) strlen_int ;;
-              l) log_int ;;
-              e) exit_int ;;
-              h) help_int ;;
-              *) clear && exit 0;;
-          esac
+          eval ${int_commands[(($selection*2))-1]}_int
     done
 }
 
 handle_exit_codes(){
-    case $1 in
-        [1-6] ) show_output "${exit_codes[$1]}" "Interactive mode" "ERROR" && exit 1;;
-        0 ) true ;;
-    esac
+  show_output "${exit_codes[$1]}" "Interactive mode" "ERROR"
 }
 
 calc_int(){
@@ -69,70 +51,74 @@ calc_int(){
     exec 3>&-
     arr=($response)
     res="$(./calc.sh "$op" "${arr[0]}" "${arr[1]}")"
-    if handle_exit_codes $? ; then
+    exit_code=$?
+    if [[ exit_code -eq 0 ]]; then
         show_output "$res" "Calculator" "Result"
+    else
+      handle_exit_codes $exit_code
     fi
+}
+
+interactive_int(){
+  show_output "Любители рекурсии идут на ЙУХ" "***" "~~~"
 }
 
 search_int(){
     exec 3>&1
     dir="$(get_input "Input direcory" "Search" "Input" 2>&1 1>&3)"
     pattern="$(get_input "Input pattern" "Search" "Input" 2>&1 1>&3)"
-    res="$(./search "$dir" "$pattern")"
-    if handle_exit_codes $? ; then
-        show_output "$res" "Search" "Found files"
-    fi
+    res="$(./search.sh "$dir" "$pattern" 1)"
+    exit_code=$?
     exec 3>&-
+    if [[ exit_code -eq 0 ]]; then
+      show_output "$res" "Calculator" "Result"
+    else
+      handle_exit_codes $exit_code
+    fi
 }
 
 reverse_int(){
     exec 3>&1
     s="$(get_input "Input source" "Reverse" "Input" 2>&1 1>&3)"
     d="$(get_input "Input destination" "Reverse" "Input" 2>&1 1>&3)"
-    # show_output "$(reverse "$s" "$d")" "Reverse" "Success"
     ./reverse.sh "$s" "$d"
-    handle_exit_codes $?
+    exit_code=$?
     exec 3>&-
+    if [[ exit_code -ne 0 ]]; then
+      handle_exit_codes $exit_code
+    fi
+
 }
 
 strlen_int(){
     exec 3>&1
     string="$(get_input "Enter string" "Strlen" "Input" 2>&1 1>&3)"
-    show_output "${#string}" "Strlen" "Lenght of this string is"
+    res="$(./strlen.sh "$string")"
+    exit_code=$?
     exec 3>&-
+    if [[ exit_code -eq 0 ]]; then
+      show_output "$res" "Calculator" "Result"
+    else
+      handle_exit_codes $exit_code
+    fi
 }
 
 log_int(){
-    if ! [[ -f "/var/log/anaconda/X.log" ]]; then
-        handle_exit_codes 4; fi
-    content=$(cat /var/log/anaconda/X.log)
-    IFS=$'\n'
-    wt=$(mktemp)
-    it=$(mktemp)
-    ot=$(mktemp)
-    for line in $content; do
-        if [[ $line == *"(WW)"* ]]; then
-            echo -e "${line/(WW)/\\Z1Warning \\Zn}" >> "$wt"
-        elif [[ $line == *"(II)"* ]]; then
-            echo -e "${line/(II)/\\Z3 Information \\Zn}" >> "$it"
-        else
-            echo "$line" >> "$ot"
-        fi
-    done
-    dialog --colors --msgbox "$(cat "$wt" "$it")" 50 50
-    for i in $wt $it $ot; do
-        cat "$i"
-        rm "$i"
-    done
+    res=$(./log.sh 1)
+    show_output "$res" "Log" "asd"
 }
 
 exit_int(){
     exec 3>&1
     code="$(get_input "Enter exit code" "Exit" "Input" 2>&1 1>&3)"
     exec 3>&-
-    clear && exit $code
+    if ! [[ $3 =~ ^-?[0-9]+$ ]]; then
+      handle_exit_codes 5
+    else
+      clear && exit $code
+    fi
 }
 
 help_int(){
-    show_output "$(help "Учи матчасть" "HELP" "***")"
+    show_output "$(./help.sh "Учи матчасть" "HELP" "***")"
 }

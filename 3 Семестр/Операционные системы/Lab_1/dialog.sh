@@ -2,6 +2,7 @@
 
 show_output(){
     dialog \
+    --colors \
     --clear \
     --backtitle "$2" \
     --title "$3" \
