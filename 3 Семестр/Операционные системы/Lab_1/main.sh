@@ -47,10 +47,13 @@ if [[ correct_command -eq 1 ]]; then
       interactive "${available_commands[@]}"
     fi
   elif [[ "$1" = "exit" ]]; then
-    if ! [[ $2 =~ ^-?[0-9]+$ ]]; then
-      echo -en "${exit_codes[5]}"
+    if [[ $# -lt 2 ]]; then exit 0
     else
-      [[ -n $2 ]] && exit "$2" || exit 0
+      if ! [[ $2 =~ ^-?[0-9]+$ ]]; then
+        echo -en "${exit_codes[5]}"
+      else
+        exit "$2" || exit 0
+      fi
     fi
   else
     ./"$1".sh "${@:2}"

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [[ -z "$1" ]]; then
+if [[ $# -lt 1 ]]; then
     exit 3
 fi
 

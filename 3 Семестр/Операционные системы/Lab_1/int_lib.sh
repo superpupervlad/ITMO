@@ -4,7 +4,8 @@ cmd=(dialog \
 --backtitle "Interactive mode" \
 --title "Menu" \
 --clear \
---menu "Choose wisely" 0 0 0)
+--nocancel \
+--menu "Добро пожаловать. Снова." 0 0 0)
 
 
 
@@ -67,13 +68,17 @@ search_int(){
     exec 3>&1
     dir="$(get_input "Input direcory" "Search" "Input" 2>&1 1>&3)"
     pattern="$(get_input "Input pattern" "Search" "Input" 2>&1 1>&3)"
-    res="$(./search.sh "$dir" "$pattern" 1)"
-    exit_code=$?
-    exec 3>&-
-    if [[ exit_code -eq 0 ]]; then
-      show_output "$res" "Calculator" "Result"
+    if [[ -z $dir ]] || [[ -z $pattern ]]; then
+      handle_exit_codes 3
     else
-      handle_exit_codes $exit_code
+      res="$(./search.sh "$dir" "$pattern" 1)"
+      exit_code=$?
+      exec 3>&-
+      if [[ exit_code -eq 0 ]]; then
+        show_output "$res" "Calculator" "Result"
+      else
+        handle_exit_codes $exit_code
+      fi
     fi
 }
 
@@ -112,10 +117,11 @@ exit_int(){
     exec 3>&1
     code="$(get_input "Enter exit code" "Exit" "Input" 2>&1 1>&3)"
     exec 3>&-
-    if ! [[ $3 =~ ^-?[0-9]+$ ]]; then
-      handle_exit_codes 5
+    if [[ -z $code ]]; then clear; exit 0;
+    elif ! [[ $code =~ ^-?[0-9]+$ ]]; then
+        handle_exit_codes 5
     else
-      clear && exit $code
+      clear; exit $code
     fi
 }
 
