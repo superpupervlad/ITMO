@@ -1,0 +1,17 @@
+fun main(args: Array<String>) {
+	var s1 = Shop("firstshop", "aaa", 0)
+	var s2 = Shop("firstshop", "aaa", 1)
+	s1.suply_product(Product("abc", 1), 1, 10)
+	s2.suply_product(Product("abc", 1), 2, 10)
+	s2.suply_product(Product("2", 2), 49, 20)
+	s2.suply_product(Product("3", 3), 1, 45)
+	var c = Chain()
+	c.add_shop(s1)
+	c.add_shop(s2)
+	println(c.find_min_price(1))
+	println("----------")
+	println(s2.howMuchCanIBuy(100))
+	println("----------")
+	println(c.howMuchCanIBuy(1, 97))
+	println("Hello World!")
+}
