@@ -8,7 +8,7 @@ class Shop(val name: String, val address: String, val scode: Int) {
     fun get_address(): String {return address}
     fun get_scode(): Int {return scode}
 
-    fun suply_product(product: Product, price: Int, qty: Int){
+    fun supply_product(product: Product, price: Int, qty: Int){
         if (product.pcode !in assortment)
             assortment[product.pcode] = ProductInShop(product, price, qty)
         else {
@@ -17,10 +17,10 @@ class Shop(val name: String, val address: String, val scode: Int) {
         }
     }
 
-    fun suply_products(plist: List<Product>, pricelist: List<Int>, qtylist: List<Int>){
+    fun supply_products(plist: List<Product>, pricelist: List<Int>, qtylist: List<Int>){
         if (plist.size != pricelist.size || pricelist.size != qtylist.size) throw Exception("Wrong lists dimension")
         for (i in plist.indices)
-            suply_product(plist[i], pricelist[i], qtylist[i])
+            supply_product(plist[i], pricelist[i], qtylist[i])
     }
 
     // Return name, price, qty
@@ -65,5 +65,23 @@ class Shop(val name: String, val address: String, val scode: Int) {
         for ((pcode, qty) in pcode_and_qty)
             assortment[pcode]!!.qty.minus(qty)
         return total
+    }
+
+    fun print_info(){
+        println("Название: " + name +
+                "\nКод: " + scode +
+                "\nАдрес: " + address + "\n")
+    }
+
+    fun print_full_info(){
+        println("##### Информация о магазине #####")
+        print_info()
+        println("##### Информация о продуктах #####")
+        for ((_, product) in assortment){
+            println("Название: " + product.name +
+                    "\nКод: " + product.pcode +
+                    "\nЦена: " + product.price +
+                    "\nКоличество: " + product.qty + "\n")
+        }
     }
 }

@@ -2,7 +2,7 @@ import java.awt.geom.PathIterator
 import java.lang.Exception
 
 class Chain {
-    var shops_list = arrayListOf<Shop>()
+    var shops_list: MutableMap<Int, Shop> = mutableMapOf()
     var scount: Int = 0
     var scodes_set: MutableSet<Int> = mutableSetOf()
 
@@ -15,7 +15,7 @@ class Chain {
             while (scount in scodes_set){
                 scount++
             }
-            shops_list.add(Shop(name, address, scount))
+            shops_list[scount] = Shop(name, address, scount)
             scodes_set.add(scount)
             scount++
         }
@@ -23,8 +23,8 @@ class Chain {
             if (scode in scodes_set)
                 throw Exception("Shop with this code already exists")
             else{
-                shops_list.add(Shop(name, address, scode))
-                scodes_set.add(scount)
+                shops_list[scode] = Shop(name, address, scode)
+                scodes_set.add(scode)
             }
     }
 
@@ -48,23 +48,23 @@ class Chain {
             }
     }
 
-    fun supply_product(scode: Int, pcode: Int, price: Int, qty: Int){
+    fun suppply_product(scode: Int, pcode: Int, price: Int, qty: Int){
         if (pcode !in pcodes_set) throw Exception("No such product")
         if (scode !in scodes_set) throw Exception("No such shop")
-        shops_list[scode].suply_product(products_list[pcode], price, qty)
+        shops_list[scode]!!.supply_product(products_list[pcode], price, qty)
     }
 
-    fun supply_product_directly(scode: Int, name: String, price: Int, qty: Int, pcode: Int?,){
+    fun suppply_product_directly(scode: Int, name: String, price: Int, qty: Int, pcode: Int? = null){
         if (scode !in scodes_set) throw Exception("No such shop")
         val actual_pcode = create_product(name, pcode)
-        shops_list[scode].suply_product(products_list[actual_pcode], price, qty)
+        shops_list[scode]!!.supply_product(products_list[actual_pcode], price, qty)
     }
 
     // Shop code, price
     fun find_min_price(pcode: Int, qty: Int = 1): Pair<Int, Int>?{
         var min = Int.MAX_VALUE
         var scode = 0
-        for (shop in shops_list)
+        for ((_, shop) in shops_list)
             if (shop.get_product_qty(pcode) >= qty && shop.get_product_price(pcode) < min) {
                 min = shop.get_product_price(pcode)
                 scode = shop.get_scode()
@@ -77,7 +77,7 @@ class Chain {
     fun find_min_price(pcode_and_qty: List<Pair<Int, Int>>): Pair<Int, Int>?{
         var min = Int.MAX_VALUE
         var scode = 0
-        for (shop in shops_list) {
+        for ((_, shop) in shops_list) {
             var shop_total = 0
             for ((pcode, qty) in pcode_and_qty) {
                 if (shop.get_product_qty(pcode) >= qty)
@@ -103,13 +103,50 @@ class Chain {
         if (new_scode != null)
             actual_scode = new_scode
         if (actual_scode !in scodes_set){
-            shops_list.add(shop)
+            shops_list[actual_scode] = shop
             scodes_set.add(actual_scode)
         }
         else throw Exception("Shop with this code already in chain")
     }
 
+    // Product, qty, change
     fun howMuchCanIBuy(scode: Int, money: Int): ArrayList<Triple<Product, Int, Int>>{
-        return shops_list[scode].howMuchCanIBuy(money)
+        if (scode in scodes_set)
+            return shops_list[scode]!!.howMuchCanIBuy(money)
+        else
+            throw Exception("No such shop")
+    }
+
+    fun print_info(){
+        println("##### Общее #####" +
+                "\nМагазинов: " + scodes_set.size +
+                "\nТоваров: " + pcodes_set.size + "\n")
+        for ((_, shop) in shops_list){
+            shop.print_full_info()
+        }
+    }
+
+    fun get_shop(scode: Int): Shop?{
+        if (scode in scodes_set)
+            return shops_list[scode]
+        else
+            return null
+    }
+
+    fun get_product(pcode: Int): Product?{
+        if (pcode in pcodes_set)
+            return products_list[pcode]
+        else
+            return null
+    }
+
+    fun checkShop(scode: Int): Boolean{
+        return scode in scodes_set
+    }
+
+    fun buyProducts(scode: Int, pcode_and_qty: List<Pair<Int, Int>>): Int?{
+        if (checkShop(scode))
+            return shops_list[scode]!!.buyProducts(pcode_and_qty)
+        throw Exception("No such shop")
     }
 }
