@@ -6,6 +6,8 @@ class Data {
 	}
 
 	fun add_value_to_section(section: String, name: String, value: String){
+		if (sections[section]?.get_value(name) != null)
+			throw Exception("Duplicate field")
 		sections[section]?.add_field(name, value)
 	}
 

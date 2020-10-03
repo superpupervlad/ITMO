@@ -53,18 +53,20 @@ class IniParser(filepath: String) {
 			val uncomment_line_split = uncomment_line.split('=')
 			sections.add_value_to_section(current_section, uncomment_line_split[0].trim(), uncomment_line_split[1].trim())
 		}
-		else {
-			throw Exception("Wrong syntax in file")
-		}
+		else
+			throw Exception("Wrong syntax in file: broken field")
 	}
 
 	private fun add_sec(line: String): String{
-		val close_bracket_pos = line.indexOfFirst { it == ']' }
+		val uncomment_line = line.split(';')[0]
+		if (!uncomment_line.matches(Regex("\\[\\w+\\]\\s*")))
+			throw Exception("Wrong syntax in file: broken section")
+		val close_bracket_pos = uncomment_line.indexOfFirst { it == ']' }
 		val section_name: String
 		if (close_bracket_pos != -1)
-			section_name = line.substring(1, close_bracket_pos).trim()
+			section_name = uncomment_line.substring(1, close_bracket_pos).trim()
 		else
-			throw Exception("Wrong syntax in file")
+			throw Exception("Wrong syntax in file: broken section")
 		if (!section_name.matches(Regex("\\w+"))) throw Exception("Wrong syntax in file")
 		sections.add_section(section_name)
 		return section_name

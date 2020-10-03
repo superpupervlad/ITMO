@@ -4,5 +4,5 @@ fun main(args: Array<String>) {
 		throw Exception("Problem with file!")
 	} else println(1) //println(parser.get_info<Int>("SecondSection", "lastvalue", "float"))
 	val d = parser.parse()
-	print(d.get_value("SecondSection", "sstring", "string"))
+	print(d.get_value("FirstSection", "fdsv", "float"))
 }
