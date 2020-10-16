@@ -2,7 +2,7 @@
 
 class Shop(val name: String, val address: String, val scode: Int) {
     // Code, <Price, Qty>
-    var assortment: MutableMap<Int, ProductInShop> = mutableMapOf()
+    private var assortment: MutableMap<Int, ProductInShop> = mutableMapOf()
 
     fun get_name(): String {return name}
     fun get_address(): String {return address}
@@ -40,6 +40,7 @@ class Shop(val name: String, val address: String, val scode: Int) {
         else
             return 0
     }
+
     fun check_product(pcode: Int): Boolean{
         return pcode in assortment && (assortment[pcode]?.qty!! > 0)
     }
@@ -47,7 +48,7 @@ class Shop(val name: String, val address: String, val scode: Int) {
     // Product, qty, change
     fun howMuchCanIBuy(money: Int): ArrayList<Triple<Product, Int, Int>>{
         var product_list: ArrayList<Triple<Product, Int, Int>> = arrayListOf<Triple<Product, Int, Int>>()
-        for ((key, product) in assortment){
+        for ((_, product) in assortment){
             val total = minOf(product.qty, money/product.price)
             product_list.add(Triple(product as Product, total, money - total*product.price))
         }
