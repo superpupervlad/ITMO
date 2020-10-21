@@ -6,11 +6,14 @@
 #include <string.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <stdarg.h>
+
 
 #include "err_handle.h"
 #include "codes.h"
+#include "unilib.h"
 
-#define PORT 12341
+#define PORT 12347
 #define SERVER_IP "127.0.0.1"
 
 class Client{
@@ -18,6 +21,8 @@ public:
     unsigned port;
     const char * server_ip;
     short fd;
+    std::string login = "primi";
+    std::string pass = "labu";
 
     void connect_to_server(const char * ip, unsigned port_){
         port = port_;
@@ -43,8 +48,39 @@ public:
         write(fd, &code, 1);
     }
 
+    void send_args(int arg_num, ...){
+        va_list valist;
+        va_start(valist, arg_num);
+
+        char res[256];
+        strcpy(res, va_arg(valist, char *));
+        strcat(res, "!");
+        for (int i = 1; i < arg_num; i++) {
+            strcat(res, va_arg(valist, char *));
+            strcat(res, "!");
+        }
+
+        va_end(valist);
+
+        send_msg(res);
+    }
+
+    void send_args(std::vector<std::string> strings){
+        std::string res;
+        for (int i = 0; i < strings.size(); i++){
+            res.append(strings[i]);
+            res.append("!");
+        }
+        send_msg(res);
+    }
+
+    void send_msg(std::string msg){
+        write(fd, msg.c_str(), strlen(msg.c_str()));
+    }
+
     char * safe_send_code(char code){
         send_code(code);
+        printf("1");
         return aftersend(code);
     }
 
@@ -58,8 +94,10 @@ public:
                     return default_response;
 //                *c = recieve_code();
 //                return c;
-            case GET_TIME:
+            case GET_DATETIME:
                 return recieve_msg();
+//            case LAUNCH_PROC:
+//                return launch_proc();
             default:
                 return default_response;
         }
@@ -78,20 +116,35 @@ public:
         ssize_t nread = 0;
         while (nread == 0)
             nread = read(fd, &code, 1);
-        //printf("d:'%d', c:'%c'", code, code);
         return code;
     }
 
     void quit(){
         close(fd);
     }
+
+    char * launch_proc(const char * name, const char * parameters, const char * uid){
+        send_code(LAUNCH_PROC);
+        send_args(3, name, parameters, uid);
+        return recieve_msg();
+    }
+
+    // 4.5.9
+    bool log(){
+        std::vector<std::string> data;
+        data.push_back(login);
+        data.push_back(pass);
+        send_args(data);
+        return recieve_code();
+    }
 };
 
 int main(){
-    //printf("0");
     Client c{};
     c.connect_to_server(SERVER_IP, PORT);
-    printf("-%s-", c.safe_send_code(PING));
+    c.log();
+
+    printf("%s", c.launch_proc("ls -lah", " ", " "));
 
     c.quit();
 }
