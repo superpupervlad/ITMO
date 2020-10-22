@@ -95,6 +95,10 @@ char Client::recieve_code(){
     return code;
 }
 
+std::vector<std::string> Client::parse_args(char * args){
+    return split((std::string)args);
+}
+
 void Client::quit(){
     close(fd);
 }
@@ -118,4 +122,10 @@ bool Client::log(){
     data.push_back(pass);
     send_args(data);
     return recieve_code();
+}
+
+char * Client::get_proc_info(int pid){
+    send_code(GET_PROC_INFO);
+    send_msg(std::to_string(pid));
+    return recieve_msg();
 }

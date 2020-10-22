@@ -26,7 +26,7 @@ int main() {
 
     s.handle_code(s.recieve_code());
     s.handle_code(s.recieve_code());
-    s.handle_code(s.recieve_code());
+
     s.shutdown();
 }
 

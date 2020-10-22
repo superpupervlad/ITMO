@@ -14,14 +14,16 @@
 #include "unilib.h"
 #include "Client.h"
 
+using std::cout;
+
 int main(){
     Client c{};
     c.connect_to_server(SERVER_IP, PORT);
     c.log();
 
-    printf("%s", c.launch_proc("ls -lah", " ", " "));
-    printf("%s", c.launch_proc("ls -lah", " ", " "));
-    printf("%s", c.launch_proc("ls -lah", " ", " "));
+    printf("%s\n", c.launch_proc("ls -lah", " ", " "));
+
+    printf("%s\n", c.get_proc_info(1));
 
     c.quit();
 }

@@ -11,7 +11,8 @@ enum CODES{
     GET_DATETIME=4,
     GET_SYS_INFO=5,
     LAUNCH_PROC=6,
-    LAUNCH_PROC_BG=7
+    LAUNCH_PROC_BG=7,
+    GET_PROC_INFO=8
 };
 
 #endif //LAB_2_1_CODES_H

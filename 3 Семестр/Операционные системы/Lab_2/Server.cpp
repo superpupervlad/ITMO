@@ -77,6 +77,11 @@ void Server::handle_code(char msg){
                     1)));
             break;
         }
+        case GET_PROC_INFO:{
+            int pid = atoi(recieve_msg());
+            Process p = get_proc_info(pid);
+            send_proc_info(p);
+        }
         default:
             return;
     }
@@ -201,4 +206,40 @@ int Server::launch_proc_bg(const char * name, const char * parameters, int uid){
     else {
         return pid;
     }
+}
+
+// 4.5.1.2 return output
+std::string Server::launch_proc(const char * name, const char * parameters, int uid){
+    char cmd[256];
+    strcpy(cmd, name);
+    strcat(cmd, " ");
+    strcat(cmd, parameters);
+
+    return GetStdoutFromCommand(cmd);
+}
+
+// 4.5.2
+Process Server::get_proc_info(int pid){
+    Process p;
+    p.pid = pid;
+
+    int unused;
+    char filename[64];
+    sprintf(filename, "/proc/%d/stat", pid);
+    FILE *f = fopen(filename, "r");
+
+    fscanf(f, "%d %s %c %d", &unused, p.command, &p.state, &p.ppid);
+    fclose(f);
+    return p;
+}
+
+void Server::send_proc_info(Process p){
+    std::string info;
+    info.append("PID: " + std::to_string(p.pid) + '\n');
+    info.append("PPID: " + std::to_string(p.ppid) + '\n');
+    info.append("STATE: ");
+    info.push_back(p.state);
+    info.append("\nCOMMAND: ");
+    info += p.command;
+    send_msg(info);
 }

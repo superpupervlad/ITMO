@@ -16,7 +16,7 @@
 #include "codes.h"
 #include "unilib.h"
 
-#define PORT 12347
+#define PORT 12345
 #define SERVER_IP "127.0.0.1"
 
 class Client{
@@ -47,6 +47,8 @@ public:
 
     char recieve_code();
 
+    std::vector<std::string> parse_args(char * args);
+
     void quit();
 
     char * launch_proc(const char * name, const char * parameters, const char * uid);
@@ -55,6 +57,8 @@ public:
 
     // 4.5.9
     bool log();
+
+    char * get_proc_info(int pid);
 };
 
 #endif //LAB_2_1_CLIENT_H

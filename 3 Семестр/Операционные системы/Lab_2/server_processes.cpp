@@ -16,19 +16,7 @@ char * get_time(){
 
 #define FILE_MEM "/proc/meminfo"
 
-// 4.5.1.2 return output
-std::string launch_proc(const char * name, const char * parameters, int uid){
-    char cmd[256];
-    strcpy(cmd, name);
-    strcat(cmd, " ");
-    strcat(cmd, parameters);
 
-    return GetStdoutFromCommand(cmd);
-}
-
-// 4.5.2
-// return list of struct?
-void get_proc_info();
 
 // 4.5.3
 int watch_proc(int pid);

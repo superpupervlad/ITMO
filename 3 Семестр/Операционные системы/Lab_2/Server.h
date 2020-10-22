@@ -18,11 +18,16 @@
 #include "server_processes.h"
 #include "unilib.h"
 
-#define PORT 12347
+#define PORT 12345
 
 class Server;
 
-
+struct Process{
+    int pid;
+    int ppid;
+    char state;
+    char command[64];
+};
 
 class Server {
 public:
@@ -50,6 +55,9 @@ public:
     std::vector<std::string> parse_args(char * args);
     bool check_login();
     int launch_proc_bg(const char * name, const char * parameters, int uid);
+    std::string launch_proc(const char * name, const char * parameters, int uid);
+    Process get_proc_info(int pid);
+    void send_proc_info(Process process);
 };
 
 
