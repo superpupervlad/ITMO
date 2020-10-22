@@ -28,7 +28,7 @@ void Client::send_args(int arg_num, ...){
     va_list valist;
     va_start(valist, arg_num);
 
-    char res[256];
+    char res[1024];
     strcpy(res, va_arg(valist, char *));
     strcat(res, "!");
     for (int i = 1; i < arg_num; i++) {
@@ -80,10 +80,10 @@ char * Client::aftersend(char code){
 }
 
 char * Client::recieve_msg(){
-    char * buf = (char *)malloc(256 * sizeof(char));
+    char * buf = (char *)malloc(1024 * sizeof(char));
     ssize_t nread = 0;
     while (nread == 0)
-        nread = read(fd, buf, 256);
+        nread = read(fd, buf, 1024);
     return buf;
 }
 
@@ -103,6 +103,12 @@ char * Client::launch_proc(const char * name, const char * parameters, const cha
     send_code(LAUNCH_PROC);
     send_args(3, name, parameters, uid);
     return recieve_msg();
+}
+
+int Client::launch_proc_bg(const char * name, const char * parameters, const char * uid){
+    send_code(LAUNCH_PROC_BG);
+    send_args(3, name, parameters, uid);
+    return atoi(recieve_msg());
 }
 
 // 4.5.9

@@ -51,6 +51,8 @@ public:
 
     char * launch_proc(const char * name, const char * parameters, const char * uid);
 
+    int launch_proc_bg(const char * name, const char * parameters, const char * uid);
+
     // 4.5.9
     bool log();
 };

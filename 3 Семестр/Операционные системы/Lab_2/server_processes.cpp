@@ -16,17 +16,6 @@ char * get_time(){
 
 #define FILE_MEM "/proc/meminfo"
 
-// 4.5.1.1
-int launch_proc_bg(const char * name, const char * parameters, int uid){
-    if (fork() == 0) {
-        char result[256];
-        strcpy(result, name);
-        strcat(result, " ");
-        strcat(result, parameters);
-        system(result);
-    }
-}
-
 // 4.5.1.2 return output
 std::string launch_proc(const char * name, const char * parameters, int uid){
     char cmd[256];

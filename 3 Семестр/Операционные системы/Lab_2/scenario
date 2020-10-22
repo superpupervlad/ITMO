@@ -1,5 +1,5 @@
 1. Client connect
 2. Server accept connection
 3. C send code and if need prepare for reply
-4. Server recieve code and if need send reply and 
+4. Server recieve code and if need send reply
 5. Go to 3 or quit.

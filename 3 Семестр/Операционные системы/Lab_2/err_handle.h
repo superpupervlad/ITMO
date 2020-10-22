@@ -16,6 +16,8 @@ void Inet_pton(int af, const char *src, void *dst);
 
 void Connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
 
-void sig_handler(int num);
+void sig_int_handler(int num);
+
+void sig_term_handler(int num);
 
 #endif //LAB_2_1_ERR_HANDLE_H

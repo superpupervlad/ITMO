@@ -9,6 +9,8 @@
 #include <stdarg.h>
 #include <vector>
 #include <signal.h>
+#include <filesystem>
+#include <algorithm>
 
 #include "err_handle.h"
 #include "codes.h"
@@ -17,6 +19,18 @@
 #include "Server.h"
 
 Server * global_serv;
+
+namespace fs = std::filesystem;
+
+void sig_int_handler(int num){
+    global_serv->shutdown();
+    write(STDOUT_FILENO, "Goodbye\n", 9);
+}
+
+void sig_term_handler(int num){
+    global_serv->shutdown();
+    write(STDOUT_FILENO, "Goodbye\n", 9);
+}
 
 Server::Server() {
     global_serv = this;
@@ -36,6 +50,8 @@ bool Server::wait_connection(){
 
     fd = Accept(sock, (struct sockaddr *) &addr, &addr_len);
 
+    connected = true;
+
     return true;
 }
 
@@ -46,12 +62,19 @@ void Server::handle_code(char msg){
         case GET_DATETIME:
             send_msg(get_time()); break;
         case LAUNCH_PROC:{
-            printf("1");
             std::vector<std::string> a = parse_args(recieve_msg());
             send_msg(launch_proc(
                     (const char *) a[0].c_str(),
                     (const char *) a[1].c_str(),
                     1));
+            break;
+        }
+        case LAUNCH_PROC_BG:{
+            std::vector<std::string> a = parse_args(recieve_msg());
+            send_msg(std::to_string(launch_proc_bg(
+                    (const char *) a[0].c_str(),
+                    (const char *) a[1].c_str(),
+                    1)));
             break;
         }
         default:
@@ -86,7 +109,7 @@ void Server::send_args(int arg_num, ...){
     va_list valist;
     va_start(valist, arg_num);
 
-    char res[256];
+    char res[1024];
     strcpy(res, va_arg(valist, char *));
     strcpy(res, "!");
     for (int i = 1; i < arg_num; i++) {
@@ -100,10 +123,10 @@ void Server::send_args(int arg_num, ...){
 }
 
 char * Server::recieve_msg(){
-    char * buf = (char *)malloc(256 * sizeof(char));
+    char * buf = (char *)malloc(1024 * sizeof(char));
     ssize_t nread = 0;
     while (nread == 0)
-        nread = read (fd, buf, 256);
+        nread = read (fd, buf, 1024);
     return buf;
 }
 
@@ -116,9 +139,12 @@ char Server::recieve_code(){
 }
 
 void Server::shutdown(){
-    sleep(1);
-    close(fd);
-    close(sock);
+    if (connected) {
+        close(fd);
+        close(sock);
+        exit(0);
+    }
+    exit(0);
 }
 
 std::vector<std::string> Server::parse_args(char * args){
@@ -135,5 +161,44 @@ bool Server::check_login(){
     else {
         send_code(BAD);
         return false;
+    }
+}
+
+// 4.5.1.1
+//TODO Сделать что-то с uid
+int Server::launch_proc_bg(const char * name, const char * parameters, int uid){
+    char result[256];
+    strcpy(result, name);
+    strcat(result, " ");
+    strcat(result, parameters);
+
+    pid_t pid;
+    if ((pid = fork()) == 0){
+        pid_t pid2;
+
+        if ((pid2 = fork()) == 0){
+            system(result);
+        }
+        else{
+            processes.push_back(pid2);
+            std::string path = "/proc";
+            path.append(std::to_string(pid2));
+            bool check = false;
+            while (true){
+                for (const auto & entry : fs::directory_iterator("/proc"))
+                    if (entry.path() == path){
+                        processes.erase(
+                                std::find(processes.begin(), processes.end(), pid2));
+                        // logger it
+                        check = true;
+                        break;
+                    }
+                if (check)
+                    break;
+            }
+        }
+    }
+    else {
+        return pid;
     }
 }

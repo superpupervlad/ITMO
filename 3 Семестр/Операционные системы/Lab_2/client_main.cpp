@@ -20,6 +20,8 @@ int main(){
     c.log();
 
     printf("%s", c.launch_proc("ls -lah", " ", " "));
+    printf("%s", c.launch_proc("ls -lah", " ", " "));
+    printf("%s", c.launch_proc("ls -lah", " ", " "));
 
     c.quit();
 }

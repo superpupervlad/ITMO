@@ -17,13 +17,16 @@
 #include "Server.h"
 
 int main() {
-    //signal(SIGINT, sig_handler);
+    signal(SIGINT, sig_int_handler);
+    signal(SIGTERM, sig_term_handler);
 
     Server s{};
     s.wait_connection();
     while(!s.check_login()) {}
-    s.handle_code(s.recieve_code());
 
+    s.handle_code(s.recieve_code());
+    s.handle_code(s.recieve_code());
+    s.handle_code(s.recieve_code());
     s.shutdown();
 }
 

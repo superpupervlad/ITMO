@@ -26,11 +26,13 @@ class Server;
 
 class Server {
 public:
+    bool connected = false;
     unsigned port = PORT;
     short fd;
     short sock;
     std::string login = "primi";
     std::string pass = "labu";
+    std::vector<int> processes;
 
     Server();
 
@@ -47,7 +49,7 @@ public:
     void shutdown();
     std::vector<std::string> parse_args(char * args);
     bool check_login();
-
+    int launch_proc_bg(const char * name, const char * parameters, int uid);
 };
 
 
