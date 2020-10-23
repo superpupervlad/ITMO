@@ -21,9 +21,9 @@ int main(){
     c.connect_to_server(SERVER_IP, PORT);
     c.log();
 
-    printf("%s\n", c.launch_proc("ls -lah", " ", " "));
-
-    printf("%s\n", c.get_proc_info(1));
+    //printf("%s\n", c.launch_proc("ls -lah", " ", " "));
+    //printf("%d\n", c.launch_proc_bg("sleep 100", " ", " "));
+    //printf("%s\n", c.get_proc_info(1));
 
     c.quit();
 }
