@@ -1,7 +1,0 @@
-/home/vladislav/projects/Programming/build/CMakeFiles/edit_cache.dir
-/home/vladislav/projects/Programming/build/CMakeFiles/install/strip.dir
-/home/vladislav/projects/Programming/build/CMakeFiles/programming.dir
-/home/vladislav/projects/Programming/build/CMakeFiles/list_install_components.dir
-/home/vladislav/projects/Programming/build/CMakeFiles/install/local.dir
-/home/vladislav/projects/Programming/build/CMakeFiles/rebuild_cache.dir
-/home/vladislav/projects/Programming/build/CMakeFiles/install.dir

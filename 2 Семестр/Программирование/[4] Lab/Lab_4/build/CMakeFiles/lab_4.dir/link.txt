@@ -1,1 +1,0 @@
-/usr/bin/c++    -rdynamic CMakeFiles/lab_4.dir/main.cpp.o CMakeFiles/lab_4.dir/GeomObjects.cpp.o  -o lab_4 
