@@ -36,7 +36,7 @@ class Filesystem {
 	}
 
 	@JvmName("addInodeToDirectory1")
-	fun addInodeToDirectory(path: List<String>, type: InodeTypes, name: String, size: Int = 0){
+	fun addInodeToDirectory(path: List<String>, type: InodeTypes, name: String, size: Int = 0): Int{
 		var cur_dir = root
 		var next_dir: Int
 
@@ -46,14 +46,17 @@ class Filesystem {
 				cur_dir = cur_dir.moveToDir(next_dir)!!
 		}
 
+		val inode_id = newId()
 		if (type == InodeTypes.DIRECTORY)
-			cur_dir.addContent(Directory(newId(), name, this))
+			cur_dir.addContent(Directory(inode_id, name, this))
 		else
-			cur_dir.addContent(File(newId(), name, size))
+			cur_dir.addContent(File(inode_id, name, size))
+
+		return inode_id
 	}
 
 	fun changeSize(file_id: Int, new_size: Int){
-		var possible_file = findInodeById(file_id)
+		val possible_file = findInodeById(file_id)
 		if (possible_file == null)
 			throw Exception("Can't change size: wrong id")
 		else
@@ -64,6 +67,10 @@ class Filesystem {
 		return root.findInodeById(inode_id)
 	}
 
+	fun findDirWhichContainsId(id: Int): Inode?{
+		return root.findDirWhichContainsId(id)
+	}
+
 	fun getDirById(dir_id: Int): Directory?{
 		return root.getDirById(dir_id)
 	}
@@ -71,7 +78,7 @@ class Filesystem {
 	fun printInfo(){
 		println("========================================")
 		root.printInfo()
-		println("========================================")
+		println("========================================\n")
 	}
 }
 

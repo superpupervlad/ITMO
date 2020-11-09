@@ -1,4 +1,4 @@
-class Directory(id:Int, name: String, val fs: Filesystem): Inode(id, name) {
+class Directory(id: Int, name: String, val fs: Filesystem): Inode(id, name) {
 	private var content = mutableMapOf<Int, Inode>()
 
 	override var size: Int = 0
@@ -20,6 +20,7 @@ class Directory(id:Int, name: String, val fs: Filesystem): Inode(id, name) {
 
 	fun findInodeById(inode_id: Int): Inode?{
 		var possible_inode: Inode?
+
 		for ((cur_id, i) in content){
 			if (cur_id == inode_id)
 				return i
@@ -29,6 +30,23 @@ class Directory(id:Int, name: String, val fs: Filesystem): Inode(id, name) {
 					return possible_inode
 			}
 		}
+
+		return null
+	}
+
+	fun findDirWhichContainsId(id: Int): Inode?{
+		var possible_inode: Inode?
+
+		for ((cur_id, i) in content){
+			if (cur_id == id)
+				return this
+			if (i is Directory){
+				possible_inode = i.findDirWhichContainsId(id)
+				if (possible_inode != null)
+					return i
+			}
+		}
+
 		return null
 	}
 
@@ -48,11 +66,10 @@ class Directory(id:Int, name: String, val fs: Filesystem): Inode(id, name) {
 		val new_id = fs.newId()
 		val new_inode: Inode
 
-		if (type == InodeTypes.DIRECTORY)
-			new_inode = Directory(new_id, name, fs)
-
+		new_inode = if (type == InodeTypes.DIRECTORY)
+			Directory(new_id, name, fs)
 		else
-			new_inode = File(new_id, name, size)
+			File(new_id, name, size)
 
 		addContent(new_inode)
 		return new_inode
@@ -62,7 +79,7 @@ class Directory(id:Int, name: String, val fs: Filesystem): Inode(id, name) {
 		val new_id = fs.newId()
 
 		if (i is Directory) {
-			var d = Directory(new_id, i.name, i.fs)
+			val d = Directory(new_id, i.name, i.fs)
 			for ((_, inode) in i.content)
 				d.createInode(inode)
 			addContent(d)
@@ -73,12 +90,16 @@ class Directory(id:Int, name: String, val fs: Filesystem): Inode(id, name) {
 		return new_id
 	}
 
-	fun check(id: Int): Boolean{
+	fun checkInode(id: Int): Boolean{
 		for ((_, i) in content)
 			if (i.id == id)
 				return true
 
 		return false
+	}
+
+	fun deleteInode(id: Int): Boolean{
+		return content.remove(id) != null
 	}
 
 	fun moveToDir(id: Int): Directory?{

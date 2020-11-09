@@ -1,10 +1,10 @@
-import java.lang.Exception
-
-class RestorePoint(val creationDate: CustomDate,
-                   var content: ArrayList<Inode>,
-                   var dirWithFiles: Directory) {
+abstract class RestorePoint(val creationDate: CustomDate,
+                            private var content: ArrayList<Inode>,
+                            var dirWithFiles: Directory,
+                            val id: Int) {
 
 	var idAssociation: ArrayList<Pair<Int, Int>> = arrayListOf()// real, rp
+	private lateinit var heir: RestorePoint
 
 	init {
 		for (i in content)
@@ -19,18 +19,34 @@ class RestorePoint(val creationDate: CustomDate,
 			return sum
 		}
 
-	fun getInodeInfo(real_id: Int): Pair<String, Int>{ // Name, size
-		for (a in idAssociation)
-			if (a.first == real_id){
-				val inode_in_dir = dirWithFiles.findInodeById(a.second)!!
-				return Pair(inode_in_dir.name, inode_in_dir.size)
-			}
-		throw Exception("Can't get info: no such Inode")
+	abstract fun getInodeInfo(real_id: Int): Pair<String, Int>
+
+	fun hasHeir(): Boolean{
+		return this::heir.isInitialized
 	}
 
-//	fun addInode(i: Inode){
-//		content.add(i)
-//	}
+	fun addHeir(h: RestorePoint){
+		heir = h
+	}
 
-//	fun deleteInode(i: )
+	fun getAllHeirsId(): List<Int>{
+		val heirs = arrayListOf(id)
+
+		if (hasHeir())
+			heirs.addAll(heir.getAllHeirsId())
+
+		return heirs
+	}
+
+	fun getAllHeirsIdAndTotalSize(): Pair<ArrayList<Int>, Int>{
+		val heirsAndSize: Pair<ArrayList<Int>, Int> = Pair(arrayListOf(id), size)
+
+		if (hasHeir()) {
+			val info = heir.getAllHeirsIdAndTotalSize()
+			heirsAndSize.first.addAll(info.first)
+			heirsAndSize.second + info.second
+		}
+
+		return heirsAndSize
+	}
 }
