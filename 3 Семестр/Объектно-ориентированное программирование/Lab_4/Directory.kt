@@ -1,4 +1,4 @@
-class Directory(id: Int, name: String, val fs: Filesystem): Inode(id, name) {
+open class Directory(id: Int, name: String, val fs: Filesystem): Inode(id, name) {
 	private var content = mutableMapOf<Int, Inode>()
 
 	override var size: Int = 0
@@ -75,6 +75,14 @@ class Directory(id: Int, name: String, val fs: Filesystem): Inode(id, name) {
 		return new_inode
 	}
 
+	fun createArchive(name: String, files: List<Inode>): Archive{
+		val new_id = fs.newId()
+		val archive_inode = Archive(new_id, name, fs, files)
+
+		addContent(archive_inode)
+		return archive_inode
+	}
+
 	fun createInode(i: Inode): Int{
 		val new_id = fs.newId()
 
@@ -112,9 +120,9 @@ class Directory(id: Int, name: String, val fs: Filesystem): Inode(id, name) {
 	fun printInfo(tabs:Int = 0){
 		println("\t".repeat(tabs) + name + "/ (id: $id, size: $size)")
 		for ((_, i) in content)
-			if (i is Directory)
-				i.printInfo(tabs + 1)
-			else
+			if (i is Archive || i is File)
 				println("\t".repeat(tabs + 1) + i.name + " (id: ${i.id}, size: ${i.size})")
+			else if (i is Directory)
+				i.printInfo(tabs + 1)
 	}
 }

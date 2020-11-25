@@ -1,8 +1,7 @@
 class FullPoint(creationDate: CustomDate,
                 content: ArrayList<Inode>,
                 dirWithFiles: Directory,
-                id: Int,): RestorePoint(creationDate, content, dirWithFiles, id) {
-
+                id: Int): RestorePoint(creationDate, content, dirWithFiles, id) {
 
 	override fun getInodeInfo(real_id: Int): Pair<String, Int>{ // Name, size
 		for (a in idAssociation)

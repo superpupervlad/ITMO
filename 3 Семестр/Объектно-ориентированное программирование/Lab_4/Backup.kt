@@ -3,7 +3,8 @@ class Backup(val title: String,
              private val creationTime: CustomDate,
              private var directory: Directory,
              val backupId: Int,
-             private val fs: Filesystem) { // for checking files availability
+             private val fs: Filesystem,
+			 private val savingType: BackupSavingType) { // for checking files availability
 
 	val size: Int
 		get() = directory.size
@@ -52,12 +53,12 @@ class Backup(val title: String,
 
 	fun addRestorePoint(time: CustomDate, type: RestorePointType){
 		restorePointCounter++
-		val rp_directory = directory.createInode(InodeTypes.DIRECTORY, "RP#$restorePointCounter")
+		val rp_directory = directory.createInode(InodeTypes.DIRECTORY, "RP#$restorePointCounter") as Directory
 
 		if (type == RestorePointType.FULL)
-			restorePoints.add(FullPoint(time.copy(), addAllInodes(), rp_directory as Directory, restorePointCounter))
+			restorePoints.add(FullPoint(time.copy(), addAllInodes(), rp_directory, restorePointCounter))
 		else {
-			restorePoints.add(IncrementPoint(time.copy(), addOnlyChangedInodes(), rp_directory as Directory, restorePointCounter, restorePoints.last()))
+			restorePoints.add(IncrementPoint(time.copy(), addOnlyChangedInodes(), rp_directory, restorePointCounter, restorePoints.last()))
 			restorePoints[restorePoints.size - 2].addHeir(restorePoints.last())
 		}
 	}
@@ -145,9 +146,13 @@ class Backup(val title: String,
 	}
 
 	fun clean(){
+		clean(clearRule)
+	}
+
+	fun clean(rule: RPClean){
 		if (!checkCleanRule())
 			throw Exception("Can't clean backup: rule is not set")
-		val savedpoints = when (clearRule){
+		val savedpoints = when (rule){
 			is CleanByQuantity -> selectByQuantity(clearRule as CleanByQuantity)
 			is CleanByDate -> selectByDate(clearRule as CleanByDate)
 			is CleanBySize -> selectBySize(clearRule as CleanBySize)

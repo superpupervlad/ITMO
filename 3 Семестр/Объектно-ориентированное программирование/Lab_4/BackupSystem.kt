@@ -6,14 +6,26 @@ class BackupSystem(private val fs: Filesystem) {
 	private var backupDirectory: Directory = fs.getDirById(idOfBackupsDirectory)!!
 
 	// return if of backup
-	fun createBackup(title: String, content:ArrayList<Int>, creationTime: CustomDate): Int{
+	fun createBackup(title: String, content:ArrayList<Int>, creationTime: CustomDate, savingType: BackupSavingType): Int{
 		idCounter++
-		val new_dir = backupDirectory.createInode(InodeTypes.DIRECTORY, "$title Bid:#$idCounter")
-		backups[idCounter] = Backup(title,
-				content,
-				creationTime,
-				new_dir as Directory,
-				idCounter, fs)
+
+		if (savingType == BackupSavingType.DIRECTORY)
+			backups[idCounter] = Backup(title,
+					content,
+					creationTime,
+					backupDirectory.createInode(InodeTypes.DIRECTORY, "$title Bid:#$idCounter") as Directory,
+					idCounter,
+					fs,
+					savingType)
+		else
+			backups[idCounter] = Backup(title,
+					content,
+					creationTime,
+					backupDirectory.createArchive(title, listOf()),
+					idCounter,
+					fs,
+					savingType)
+
 
 		return idCounter
 	}
@@ -36,3 +48,7 @@ enum class RestorePointType{
 	INCREMENT
 }
 
+enum class BackupSavingType{
+	DIRECTORY,
+	ARCHIVE
+}
