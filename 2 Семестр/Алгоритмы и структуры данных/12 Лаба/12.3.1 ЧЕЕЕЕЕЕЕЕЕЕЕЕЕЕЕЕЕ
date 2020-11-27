@@ -1,0 +1,93 @@
+from math import inf
+from sys import setrecursionlimit
+from _collections import deque
+import threading
+
+setrecursionlimit(10 ** 9)
+threading.stack_size(266000000)
+
+
+def main():
+    def flow_decomposition(ver, minflow):
+        if ver == sink:
+            res.append([])
+            return minflow
+        for edge in graph[ver]:
+            if edges[edge][3] > 0:
+                result = flow_decomposition(edges[edge][2], min(minflow, edges[edge][3]))
+                if result:
+                    res[-1].append(edges[edge][0])
+                    if ver == 0:
+                        res[-1].append(len(res[len(res) - 1]))
+                        res[-1].append(result)
+                    edges[edge][3] -= result
+                    return result
+        return 0
+
+    def bfs():
+        arr[0] = 1
+        q = deque()
+        q.append(0)
+        while q and not arr[sink]:
+            cur = q.popleft()
+            if cur == sink:
+                return True
+            for edge in graph[cur]:
+                if not arr[edges[edge][2]] and edges[edge][-1] > edges[edge][3]: #cost > flow
+                    q.append(edges[edge][2])
+                    arr[edges[edge][2]] = arr[cur] + 1
+        return arr[sink]
+
+    def dfs(ver, flow):
+        if flow == 0 or ver == sink:
+            return flow
+        while cur[ver] < len(graph[ver]):
+            edge = graph[ver][cur[ver]]
+            if arr[ver] + 1 == arr[edges[edge][2]]:
+                r = dfs(edges[edge][2], min(flow, edges[edge][-1] - edges[edge][3]))
+                if r != 0:
+                    edges[edge][3] += r
+                    edges[edge ^ 1][3] -= r
+                    return r
+            cur[ver] += 1
+        return 0
+
+    fin = open("decomposition.in")
+    fout = open("decomposition.out", "w")
+
+    n, m = list(map(int, fin.readline().split()))
+    sink = n - 1
+    edges = []
+    graph = [[] for _ in range(n)]
+    res = [[]]
+
+    for i in range(m):
+        a, b, cost = list(map(int, fin.readline().split()))
+        a -= 1
+        b -= 1
+        edges.append([i + 1, a, b, 0, cost])
+        graph[a].append(len(edges) - 1)
+        edges.append([i + 1, b, a, 0, 0])
+        graph[b].append(len(edges) - 1)
+
+    graph = tuple(graph)
+    cur = [0] * n
+    arr = [0] * n
+    while bfs():
+        while dfs(0, inf):
+            continue
+        cur = [0] * n
+        arr = [0] * n
+
+    while flow_decomposition(0, inf):
+        continue
+
+    print(len(res) - 1, file = fout)
+    for i in range(1, len(res)):
+        for j in range(len(res[i]) - 1, -1, -1):
+            fout.write(str(res[i][j]) + ' ')
+        print(file = fout)
+
+
+thread = threading.Thread(target=main)
+thread.start()

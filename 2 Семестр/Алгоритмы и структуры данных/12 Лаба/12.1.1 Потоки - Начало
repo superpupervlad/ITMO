@@ -1,0 +1,50 @@
+from math import inf
+
+
+def bfs():
+    visited = [None] * n
+    visited[source] = True
+    q = [source]
+    while q and not visited[sink]:
+        ver = q.pop(0)
+        for i in range(len(graph[ver])):
+            if visited[i] is None and graph[ver][i] > 0:
+                q.append(i)
+                visited[i] = True
+                parent[i] = ver
+    return visited[sink]
+
+
+fin = open("maxflow.in")
+fout = open("maxflow.out", "w")
+
+n, m = list(map(int, fin.readline().split()))
+graph = [[0 for _ in range(n)] for _ in range(n)]
+
+for i in range(m):
+    a, b, cost = list(map(int, fin.readline().split()))
+    a -= 1
+    b -= 1
+    graph[a][b] = cost
+
+source = 0
+sink = n - 1
+parent = [None] * n
+max_flow = 0
+
+while bfs():
+    cur_flow = inf
+    temp = sink
+    while temp != source:
+        cur_flow = min(cur_flow, graph[parent[temp]][temp])
+        temp = parent[temp]
+    max_flow += cur_flow
+
+    temp = sink
+    while temp != source:
+        p = parent[temp]
+        graph[p][temp] -= cur_flow
+        graph[temp][p] += cur_flow
+        temp = parent[temp]
+
+print(max_flow, file = fout)
