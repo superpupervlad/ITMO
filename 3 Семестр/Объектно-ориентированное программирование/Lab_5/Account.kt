@@ -7,6 +7,11 @@ abstract class Account(var bank: Bank,
         return !client.isSuspicious()
     }
 
-    abstract fun withdraw(amount: Double)
-    abstract fun receive(amount: Double)
+    fun withdraw(amount: Double){
+        money -= amount
+    }
+
+    fun receive(amount: Double) {
+        money += amount
+    }
 }

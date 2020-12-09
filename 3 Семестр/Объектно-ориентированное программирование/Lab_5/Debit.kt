@@ -6,15 +6,6 @@ class Debit(bank: Bank,
             override var currentAccumulatedMoney: Double):
     Account(bank, client, id, money),
     Percentable {
-
-    override fun withdraw(amount: Double){
-        money -= amount
-    }
-
-    override fun receive(amount: Double) {
-        money += amount
-    }
-
     override fun dailyUpdate() {
         currentAccumulatedMoney += interestRate/365/100*money
     }
