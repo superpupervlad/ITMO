@@ -2,7 +2,9 @@ import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 
 class CustomDate(year: Int = 2000, month: Int = 10, day: Int = 1) {
-    private var date = LocalDate.of(year, month, day)
+    constructor(other: CustomDate) : this(other.date.year, other.date.monthValue, other.date.dayOfMonth)
+
+    var date = LocalDate.of(year, month, day)
 
     fun next(days: Long = 1){
         date = date.plusDays(days)
@@ -23,5 +25,10 @@ class CustomDate(year: Int = 2000, month: Int = 10, day: Int = 1) {
         return ChronoUnit.DAYS.between(date, other.date).toInt()
     }
 
-    fun copy(year: Int = this.date.year, month: Int = this.date.monthValue, day: Int = this.date.dayOfMonth) = CustomDate(year, month, day)
+    operator fun inc(): CustomDate{
+        next(1)
+        return this
+    }
+
+    fun clone(): CustomDate = CustomDate(this)
 }

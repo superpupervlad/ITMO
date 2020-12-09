@@ -1,12 +1,13 @@
 class Transaction(val id: Int,
-                  val amount: Int,
-                  val idAccountSender: Int,
-                  val idAccountReceiver: Int,
                   var status: TransactionStatusType,
-                  val comment: String = "") {
+                  val amount: Double,
+                  val idAccountSender: Pair<Int, Int>? = null,
+                  val idAccountReceiver: Pair<Int, Int>? = null,
+                  val userComment: String = "") {
 
-    fun cancel(){
-        status = TransactionStatusType.CANCELED
+    fun changeStatus(newStatus: TransactionStatusType): Transaction{
+        status = newStatus
+        return this
     }
 }
 

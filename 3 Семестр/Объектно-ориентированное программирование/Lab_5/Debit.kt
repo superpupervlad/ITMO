@@ -1,42 +1,29 @@
-class Debit(client: Client, id: Int, today: CustomDate, override var interestRate: Double, money: Double = 0.0, ):
-        Account(client, AccountTypes.DEBIT, id, today, money),
-        Profitable{
+class Debit(bank: Bank,
+            client: Client,
+            id: Int,
+            money: Double,
+            override var interestRate: Double,
+            override var currentAccumulatedMoney: Double):
+    Account(bank, client, id, money),
+    Percentable {
 
-    override var daysTillIncome: Int = 30
-    override var currentSavings = 0.0
-
-    override fun withdraw(amount: Int): WithdrawReply {
-        return if (money - amount > 0) {
-            money -= amount
-            WithdrawReply.GOOD
-        } else
-            WithdrawReply.BAD_INSUFFICIENT_FUNDS
+    override fun withdraw(amount: Double){
+        money -= amount
     }
 
-    override fun calculateProfitByDay(days: Int){
-        currentSavings += money * (interestRate / 365) * days
+    override fun receive(amount: Double) {
+        money += amount
     }
 
-    override fun calculateTotalProfit(newDate: CustomDate) {
-        var days = newDate - today
-
-        if (days < daysTillIncome){
-            calculateProfitByDay(days)
-            daysTillIncome -= days
-        }
-        else{
-            calculateProfitByDay(daysTillIncome)
-            daysTillIncome -= days
-            while (daysTillIncome < 0){
-                daysTillIncome += 30
-                calculateProfitByDay(30)
-            }
-        }
-        today = newDate
+    override fun dailyUpdate() {
+        currentAccumulatedMoney += interestRate/365/100*money
     }
 
-    override fun updateDate(newDate: CustomDate) {
-        calculateTotalProfit(newDate)
-        today = newDate
+    override fun monthlyUpdate(): Transaction {
+        val transaction = bank.addTransaction(currentAccumulatedMoney, null, Pair(bank.id, id), TransactionStatusType.SUCCESSFUL, "Monthly update")
+        money += currentAccumulatedMoney
+        currentAccumulatedMoney = 0.0
+        return transaction
     }
 }
+
