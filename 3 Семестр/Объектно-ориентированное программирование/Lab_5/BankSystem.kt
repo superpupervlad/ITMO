@@ -13,9 +13,15 @@ class BankSystem() {
         return bankIdCounter++
     }
 
-    fun createBank(title: String, date: CustomDate, limitForSuspiciousAccounts: Double){
+    fun createBank(title: String, date: CustomDate, limitForSuspiciousAccounts: Double, depositInterestRateList: List<Pair<Double, Double>>){
         val bankId = newBankId()
-        banks[bankId] = Bank(this, bankId, title, date, limitForSuspiciousAccounts)
+        banks[bankId] = Bank(this, bankId, title, date, limitForSuspiciousAccounts, depositInterestRateList)
+    }
+
+    fun getBank(bankId: Int): Bank{
+        if (bankId in banks)
+            return banks[bankId]!!
+        else throw Exception("Can't find bank")
     }
 
     fun checkAccount(bankId: Int, accountId: Int): Boolean{

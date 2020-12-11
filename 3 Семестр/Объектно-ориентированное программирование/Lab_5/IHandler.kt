@@ -1,4 +1,5 @@
-interface IHandler<HandleObjectType> {
-    fun setNextHandler(handler: IHandler<HandleObjectType>): IHandler<HandleObjectType>
-    fun handle(handleObject: HandleObjectType): Boolean
+interface IHandler{
+    var nextHandler: IHandler?
+    fun setNextHandler(handler: IHandler): IHandler
+    fun handle(handleBank: Bank, handleAccount: Account, amount: Double = 0.0): Boolean
 }
