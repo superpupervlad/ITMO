@@ -109,9 +109,9 @@ class Bank(val bs: BankSystem,
                        comment: String = ""): Transaction{
         val transactionId = newTransactionId()
         if (sendAccountId == null)
-            transactions[transactionId] = Transaction(transactionId, status, amount, null, receiveAccountId, comment)
+            transactions[transactionId] = Transaction(transactionId, bs, status, amount, null, receiveAccountId, comment)
         else
-            transactions[transactionId] = Transaction(transactionId, status, amount, Pair(id, sendAccountId), receiveAccountId, comment)
+            transactions[transactionId] = Transaction(transactionId, bs, status, amount, Pair(id, sendAccountId), receiveAccountId, comment)
         return transactions[transactionId]!!
     }
 
@@ -164,10 +164,8 @@ class Bank(val bs: BankSystem,
         }
 
         return if (check){
-            senderAccount.withdraw(amount)
-            if (receiverAccountId != null)
-                bs.accountReceiveMoney(amount, receiverAccountId)
-            newTransaction.changeStatus(TransactionStatusType.SUCCESSFUL)
+            newTransaction.execute()
+            newTransaction
         }
         else
             newTransaction.changeStatus(TransactionStatusType.UNSUCCESSFUL)

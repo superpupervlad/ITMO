@@ -32,23 +32,21 @@ class BankSystem() {
         return checkAccount(info.first, info.second)
     }
 
-    fun accountReceiveMoney(amount: Double, bankAccountId: Pair<Int, Int>){
-        banks[bankAccountId.first]?.accountReceiveMoney(amount, bankAccountId.second)
+    fun accountReceiveMoney(amount: Double, bankAccountId: Pair<Int, Int>?){
+        if (bankAccountId != null) {
+            banks[bankAccountId.first]?.accountReceiveMoney(amount, bankAccountId.second)
+        }
     }
 
-    fun accountWithdrawMoney(amount: Double, bankAccountId: Pair<Int, Int>){
-        banks[bankAccountId.first]?.accountWithdrawMoney(amount, bankAccountId.second)
+    fun accountWithdrawMoney(amount: Double, bankAccountId: Pair<Int, Int>?){
+        if (bankAccountId != null) {
+            banks[bankAccountId.first]?.accountWithdrawMoney(amount, bankAccountId.second)
+        }
     }
 
     fun cancelTransaction(transactionId: Int){
         if (transactionId !in transactions)
             throw Exception("Can't cancel transaction: No such transaction")
-        val transaction = transactions[transactionId]!!
-
-        val amount = transaction.amount
-        transaction.idAccountSender?.let { accountReceiveMoney(amount, it) }
-        transaction.idAccountReceiver?.let { accountWithdrawMoney(amount, it) }
-
-        transaction.changeStatus(TransactionStatusType.CANCELED)
+        transactions[transactionId]!!.cancel()
     }
 }

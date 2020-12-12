@@ -15,6 +15,6 @@ class Credit(bank: Bank,
 
     override fun monthlyUpdate(): Transaction {
         /* no-op */
-        return Transaction(0, TransactionStatusType.UNSUCCESSFUL,0.0)
+        return Transaction(0, bank.bs, TransactionStatusType.UNSUCCESSFUL,0.0)
     }
 }
