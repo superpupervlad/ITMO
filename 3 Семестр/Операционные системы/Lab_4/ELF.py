@@ -2,17 +2,20 @@ class ELF():
     def __init__(self, ELF_file):
         self.ELF_file = ELF_file
         self.validate()
-        self.header = self.parse_magick()
+        self.header = self.parse_magick()  # ELF_HEADER
+        self.e = self.header.endiannes
+        self.addition_info = self.get_addition_info()
+        print(self.addition_info)
 
     def validate(self):
         if self.ELF_file.read(4) != b'\x7fELF':
             raise Exception('File is not ELF!')
 
     def parse_magick(self):
-        magick_number = self.ELF_file.read(64)
+        magick_number = self.ELF_file.read(16)
 
-        _class = "ELF64" if magick_number[0] == 2 else "ELF32"
-        endianness = "little endian" if magick_number[1] == 1 else "big endian"
+        _class = "ELF64" if magick_number[0] == 2 else "ELF32"  # real offset here is +4
+        endianness = "little" if magick_number[1] == 1 else "big"
         version = magick_number[2]
         os_list = {
             0: "System V",
@@ -59,6 +62,23 @@ class ELF():
         machine = machine_list.get(magick_number[14:15])
         return ELF_HEADER(_class, endianness, version, OS, ABI_version, obj_filetype, machine)
 
+    def get_addition_info(self):
+        # real offset here is +20
+        additional_info = {"e_version": self.ELF_file.read(4),
+                           "e_entry": int.from_bytes(self.ELF_file.read(8), self.e),
+                           "e_phoff": int.from_bytes(self.ELF_file.read(8), self.e),
+                           "e_shoff": int.from_bytes(self.ELF_file.read(8), self.e),
+                           "e_flags": int.from_bytes(self.ELF_file.read(4), self.e),
+                           "e_ehsize": int.from_bytes(self.ELF_file.read(2), self.e),
+                           "e_phentsize": int.from_bytes(self.ELF_file.read(2), self.e),
+                           "e_phnum": int.from_bytes(self.ELF_file.read(2), self.e),
+                           "e_shentsize": int.from_bytes(self.ELF_file.read(2), self.e),
+                           "e_shnum": int.from_bytes(self.ELF_file.read(2), self.e),
+                           "e_shstrndx": int.from_bytes(self.ELF_file.read(2), self.e),
+                           }
+        return additional_info
+
+
 class ELF_HEADER():
     def __init__(self, _class, _endiannes, _version, _os, _abi, _obj_filetype, _machine):
         self._class = _class  # ELF64 or ELF32
@@ -76,7 +96,3 @@ class ELF_HEADER():
         for i in range(len(fields)):
             string += fields[i] + ": " + str(values[i]) + '\n'
         return string
-
-class ELF_DATA():
-    def __init__(self, _class):
-        self._class = _class
