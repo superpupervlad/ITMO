@@ -1,0 +1,6 @@
+$str = Read-Host "Enter 4 letters"
+New-LocalUser -NoPassword -Name "UPart3$str"
+New-LocalGroup -Name "GPart3$str"
+Add-LocalGroupMember -Member "UPart3$str" -Group "GPart3$str"
+Enable-LocalUser -Name "UPart3$str"
+$str = Read-Host "Enter 4 letters"

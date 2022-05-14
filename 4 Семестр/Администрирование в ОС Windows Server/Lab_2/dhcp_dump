@@ -1,0 +1,566 @@
+
+
+# ==============================================================
+#  Параметры настройки сервера s1                   
+# ==============================================================
+
+
+
+# =====================================
+#     Начало добавления классов                     
+# =====================================
+
+Dhcp Server \\s1 Add Class "Класс маршрутиз. и удал. доступа по умолчанию" "Пользовательский класс для клиентов удаленного доступа" 525241532e4d6963726f736f6674 0 b
+Dhcp Server \\s1 Add Class "Класс защиты доступа к сети по умолчанию" "Класс cпециального пользователя по умолчанию для клиентов с ограниченным доступом" 4d5346542051756172616e74696e65 0 b
+Dhcp Server \\s1 Add Class "Класс BOOTP по умолчанию" "Пользовательский класс для BOOTP-клиента" 424f4f54502e4d6963726f736f6674 0 b
+Dhcp Server \\s1 Add Class "Параметры Microsoft Windows 2000" "Параметры, зависящие от поставщика, для клиентов Windows 2000 и выше" 4d53465420352e30 1 b
+Dhcp Server \\s1 Add Class "Параметры Microsoft Windows 98" "Параметры, зависящие от поставщика, для клиентов Windows 98" 4d534654203938 1 b
+Dhcp Server \\s1 Add Class "Параметры Microsoft" "Параметры, зависящие от поставщика и применимые для всех клиентов Windows" 4d534654 1 b
+
+# =====================================
+#     Конец добавления классов                     
+# =====================================
+
+
+# =====================================
+#     Добавление фильтра                  
+# =====================================
+
+
+Dhcp Server \\s1 v4 Set Filter EnforceAllowList=0 EnforceDenyList=0
+Dhcp Server \\s1 v4 Add Filterexemption 0
+Dhcp Server \\s1 v4 Add Filterexemption 2
+Dhcp Server \\s1 v4 Add Filterexemption 3
+Dhcp Server \\s1 v4 Add Filterexemption 4
+Dhcp Server \\s1 v4 Add Filterexemption 5
+Dhcp Server \\s1 v4 Add Filterexemption 6
+Dhcp Server \\s1 v4 Add Filterexemption 7
+Dhcp Server \\s1 v4 Add Filterexemption 8
+Dhcp Server \\s1 v4 Add Filterexemption 9
+Dhcp Server \\s1 v4 Add Filterexemption 10
+Dhcp Server \\s1 v4 Add Filterexemption 11
+Dhcp Server \\s1 v4 Add Filterexemption 12
+Dhcp Server \\s1 v4 Add Filterexemption 13
+Dhcp Server \\s1 v4 Add Filterexemption 14
+Dhcp Server \\s1 v4 Add Filterexemption 15
+Dhcp Server \\s1 v4 Add Filterexemption 16
+Dhcp Server \\s1 v4 Add Filterexemption 17
+Dhcp Server \\s1 v4 Add Filterexemption 18
+Dhcp Server \\s1 v4 Add Filterexemption 19
+Dhcp Server \\s1 v4 Add Filterexemption 20
+Dhcp Server \\s1 v4 Add Filterexemption 21
+Dhcp Server \\s1 v4 Add Filterexemption 22
+Dhcp Server \\s1 v4 Add Filterexemption 23
+Dhcp Server \\s1 v4 Add Filterexemption 24
+Dhcp Server \\s1 v4 Add Filterexemption 25
+Dhcp Server \\s1 v4 Add Filterexemption 26
+Dhcp Server \\s1 v4 Add Filterexemption 27
+Dhcp Server \\s1 v4 Add Filterexemption 28
+Dhcp Server \\s1 v4 Add Filterexemption 29
+Dhcp Server \\s1 v4 Add Filterexemption 30
+Dhcp Server \\s1 v4 Add Filterexemption 31
+Dhcp Server \\s1 v4 Add Filterexemption 32
+Dhcp Server \\s1 v4 Add Filterexemption 33
+Dhcp Server \\s1 v4 Add Filterexemption 34
+Dhcp Server \\s1 v4 Add Filterexemption 35
+Dhcp Server \\s1 v4 Add Filterexemption 36
+Dhcp Server \\s1 v4 Add Filterexemption 37
+Dhcp Server \\s1 v4 Add Filterexemption 38
+Dhcp Server \\s1 v4 Add Filterexemption 39
+Dhcp Server \\s1 v4 Add Filterexemption 40
+Dhcp Server \\s1 v4 Add Filterexemption 41
+Dhcp Server \\s1 v4 Add Filterexemption 42
+Dhcp Server \\s1 v4 Add Filterexemption 43
+Dhcp Server \\s1 v4 Add Filterexemption 44
+Dhcp Server \\s1 v4 Add Filterexemption 45
+Dhcp Server \\s1 v4 Add Filterexemption 46
+Dhcp Server \\s1 v4 Add Filterexemption 47
+Dhcp Server \\s1 v4 Add Filterexemption 48
+Dhcp Server \\s1 v4 Add Filterexemption 49
+Dhcp Server \\s1 v4 Add Filterexemption 50
+Dhcp Server \\s1 v4 Add Filterexemption 51
+Dhcp Server \\s1 v4 Add Filterexemption 52
+Dhcp Server \\s1 v4 Add Filterexemption 53
+Dhcp Server \\s1 v4 Add Filterexemption 54
+Dhcp Server \\s1 v4 Add Filterexemption 55
+Dhcp Server \\s1 v4 Add Filterexemption 56
+Dhcp Server \\s1 v4 Add Filterexemption 57
+Dhcp Server \\s1 v4 Add Filterexemption 58
+Dhcp Server \\s1 v4 Add Filterexemption 59
+Dhcp Server \\s1 v4 Add Filterexemption 60
+Dhcp Server \\s1 v4 Add Filterexemption 61
+Dhcp Server \\s1 v4 Add Filterexemption 62
+Dhcp Server \\s1 v4 Add Filterexemption 63
+Dhcp Server \\s1 v4 Add Filterexemption 64
+Dhcp Server \\s1 v4 Add Filterexemption 65
+Dhcp Server \\s1 v4 Add Filterexemption 66
+Dhcp Server \\s1 v4 Add Filterexemption 67
+Dhcp Server \\s1 v4 Add Filterexemption 68
+Dhcp Server \\s1 v4 Add Filterexemption 69
+Dhcp Server \\s1 v4 Add Filterexemption 70
+Dhcp Server \\s1 v4 Add Filterexemption 71
+Dhcp Server \\s1 v4 Add Filterexemption 72
+Dhcp Server \\s1 v4 Add Filterexemption 73
+Dhcp Server \\s1 v4 Add Filterexemption 74
+Dhcp Server \\s1 v4 Add Filterexemption 75
+Dhcp Server \\s1 v4 Add Filterexemption 76
+Dhcp Server \\s1 v4 Add Filterexemption 77
+Dhcp Server \\s1 v4 Add Filterexemption 78
+Dhcp Server \\s1 v4 Add Filterexemption 79
+Dhcp Server \\s1 v4 Add Filterexemption 80
+Dhcp Server \\s1 v4 Add Filterexemption 81
+Dhcp Server \\s1 v4 Add Filterexemption 82
+Dhcp Server \\s1 v4 Add Filterexemption 83
+Dhcp Server \\s1 v4 Add Filterexemption 84
+Dhcp Server \\s1 v4 Add Filterexemption 85
+Dhcp Server \\s1 v4 Add Filterexemption 86
+Dhcp Server \\s1 v4 Add Filterexemption 87
+Dhcp Server \\s1 v4 Add Filterexemption 88
+Dhcp Server \\s1 v4 Add Filterexemption 89
+Dhcp Server \\s1 v4 Add Filterexemption 90
+Dhcp Server \\s1 v4 Add Filterexemption 91
+Dhcp Server \\s1 v4 Add Filterexemption 92
+Dhcp Server \\s1 v4 Add Filterexemption 93
+Dhcp Server \\s1 v4 Add Filterexemption 94
+Dhcp Server \\s1 v4 Add Filterexemption 95
+Dhcp Server \\s1 v4 Add Filterexemption 96
+Dhcp Server \\s1 v4 Add Filterexemption 97
+Dhcp Server \\s1 v4 Add Filterexemption 98
+Dhcp Server \\s1 v4 Add Filterexemption 99
+Dhcp Server \\s1 v4 Add Filterexemption 100
+Dhcp Server \\s1 v4 Add Filterexemption 101
+Dhcp Server \\s1 v4 Add Filterexemption 102
+Dhcp Server \\s1 v4 Add Filterexemption 103
+Dhcp Server \\s1 v4 Add Filterexemption 104
+Dhcp Server \\s1 v4 Add Filterexemption 105
+Dhcp Server \\s1 v4 Add Filterexemption 106
+Dhcp Server \\s1 v4 Add Filterexemption 107
+Dhcp Server \\s1 v4 Add Filterexemption 108
+Dhcp Server \\s1 v4 Add Filterexemption 109
+Dhcp Server \\s1 v4 Add Filterexemption 110
+Dhcp Server \\s1 v4 Add Filterexemption 111
+Dhcp Server \\s1 v4 Add Filterexemption 112
+Dhcp Server \\s1 v4 Add Filterexemption 113
+Dhcp Server \\s1 v4 Add Filterexemption 114
+Dhcp Server \\s1 v4 Add Filterexemption 115
+Dhcp Server \\s1 v4 Add Filterexemption 116
+Dhcp Server \\s1 v4 Add Filterexemption 117
+Dhcp Server \\s1 v4 Add Filterexemption 118
+Dhcp Server \\s1 v4 Add Filterexemption 119
+Dhcp Server \\s1 v4 Add Filterexemption 120
+Dhcp Server \\s1 v4 Add Filterexemption 121
+Dhcp Server \\s1 v4 Add Filterexemption 122
+Dhcp Server \\s1 v4 Add Filterexemption 123
+Dhcp Server \\s1 v4 Add Filterexemption 124
+Dhcp Server \\s1 v4 Add Filterexemption 125
+Dhcp Server \\s1 v4 Add Filterexemption 126
+Dhcp Server \\s1 v4 Add Filterexemption 127
+Dhcp Server \\s1 v4 Add Filterexemption 128
+Dhcp Server \\s1 v4 Add Filterexemption 129
+Dhcp Server \\s1 v4 Add Filterexemption 130
+Dhcp Server \\s1 v4 Add Filterexemption 131
+Dhcp Server \\s1 v4 Add Filterexemption 132
+Dhcp Server \\s1 v4 Add Filterexemption 133
+Dhcp Server \\s1 v4 Add Filterexemption 134
+Dhcp Server \\s1 v4 Add Filterexemption 135
+Dhcp Server \\s1 v4 Add Filterexemption 136
+Dhcp Server \\s1 v4 Add Filterexemption 137
+Dhcp Server \\s1 v4 Add Filterexemption 138
+Dhcp Server \\s1 v4 Add Filterexemption 139
+Dhcp Server \\s1 v4 Add Filterexemption 140
+Dhcp Server \\s1 v4 Add Filterexemption 141
+Dhcp Server \\s1 v4 Add Filterexemption 142
+Dhcp Server \\s1 v4 Add Filterexemption 143
+Dhcp Server \\s1 v4 Add Filterexemption 144
+Dhcp Server \\s1 v4 Add Filterexemption 145
+Dhcp Server \\s1 v4 Add Filterexemption 146
+Dhcp Server \\s1 v4 Add Filterexemption 147
+Dhcp Server \\s1 v4 Add Filterexemption 148
+Dhcp Server \\s1 v4 Add Filterexemption 149
+Dhcp Server \\s1 v4 Add Filterexemption 150
+Dhcp Server \\s1 v4 Add Filterexemption 151
+Dhcp Server \\s1 v4 Add Filterexemption 152
+Dhcp Server \\s1 v4 Add Filterexemption 153
+Dhcp Server \\s1 v4 Add Filterexemption 154
+Dhcp Server \\s1 v4 Add Filterexemption 155
+Dhcp Server \\s1 v4 Add Filterexemption 156
+Dhcp Server \\s1 v4 Add Filterexemption 157
+Dhcp Server \\s1 v4 Add Filterexemption 158
+Dhcp Server \\s1 v4 Add Filterexemption 159
+Dhcp Server \\s1 v4 Add Filterexemption 160
+Dhcp Server \\s1 v4 Add Filterexemption 161
+Dhcp Server \\s1 v4 Add Filterexemption 162
+Dhcp Server \\s1 v4 Add Filterexemption 163
+Dhcp Server \\s1 v4 Add Filterexemption 164
+Dhcp Server \\s1 v4 Add Filterexemption 165
+Dhcp Server \\s1 v4 Add Filterexemption 166
+Dhcp Server \\s1 v4 Add Filterexemption 167
+Dhcp Server \\s1 v4 Add Filterexemption 168
+Dhcp Server \\s1 v4 Add Filterexemption 169
+Dhcp Server \\s1 v4 Add Filterexemption 170
+Dhcp Server \\s1 v4 Add Filterexemption 171
+Dhcp Server \\s1 v4 Add Filterexemption 172
+Dhcp Server \\s1 v4 Add Filterexemption 173
+Dhcp Server \\s1 v4 Add Filterexemption 174
+Dhcp Server \\s1 v4 Add Filterexemption 175
+Dhcp Server \\s1 v4 Add Filterexemption 176
+Dhcp Server \\s1 v4 Add Filterexemption 177
+Dhcp Server \\s1 v4 Add Filterexemption 178
+Dhcp Server \\s1 v4 Add Filterexemption 179
+Dhcp Server \\s1 v4 Add Filterexemption 180
+Dhcp Server \\s1 v4 Add Filterexemption 181
+Dhcp Server \\s1 v4 Add Filterexemption 182
+Dhcp Server \\s1 v4 Add Filterexemption 183
+Dhcp Server \\s1 v4 Add Filterexemption 184
+Dhcp Server \\s1 v4 Add Filterexemption 185
+Dhcp Server \\s1 v4 Add Filterexemption 186
+Dhcp Server \\s1 v4 Add Filterexemption 187
+Dhcp Server \\s1 v4 Add Filterexemption 188
+Dhcp Server \\s1 v4 Add Filterexemption 189
+Dhcp Server \\s1 v4 Add Filterexemption 190
+Dhcp Server \\s1 v4 Add Filterexemption 191
+Dhcp Server \\s1 v4 Add Filterexemption 192
+Dhcp Server \\s1 v4 Add Filterexemption 193
+Dhcp Server \\s1 v4 Add Filterexemption 194
+Dhcp Server \\s1 v4 Add Filterexemption 195
+Dhcp Server \\s1 v4 Add Filterexemption 196
+Dhcp Server \\s1 v4 Add Filterexemption 197
+Dhcp Server \\s1 v4 Add Filterexemption 198
+Dhcp Server \\s1 v4 Add Filterexemption 199
+Dhcp Server \\s1 v4 Add Filterexemption 200
+Dhcp Server \\s1 v4 Add Filterexemption 201
+Dhcp Server \\s1 v4 Add Filterexemption 202
+Dhcp Server \\s1 v4 Add Filterexemption 203
+Dhcp Server \\s1 v4 Add Filterexemption 204
+Dhcp Server \\s1 v4 Add Filterexemption 205
+Dhcp Server \\s1 v4 Add Filterexemption 206
+Dhcp Server \\s1 v4 Add Filterexemption 207
+Dhcp Server \\s1 v4 Add Filterexemption 208
+Dhcp Server \\s1 v4 Add Filterexemption 209
+Dhcp Server \\s1 v4 Add Filterexemption 210
+Dhcp Server \\s1 v4 Add Filterexemption 211
+Dhcp Server \\s1 v4 Add Filterexemption 212
+Dhcp Server \\s1 v4 Add Filterexemption 213
+Dhcp Server \\s1 v4 Add Filterexemption 214
+Dhcp Server \\s1 v4 Add Filterexemption 215
+Dhcp Server \\s1 v4 Add Filterexemption 216
+Dhcp Server \\s1 v4 Add Filterexemption 217
+Dhcp Server \\s1 v4 Add Filterexemption 218
+Dhcp Server \\s1 v4 Add Filterexemption 219
+Dhcp Server \\s1 v4 Add Filterexemption 220
+Dhcp Server \\s1 v4 Add Filterexemption 221
+Dhcp Server \\s1 v4 Add Filterexemption 222
+Dhcp Server \\s1 v4 Add Filterexemption 223
+Dhcp Server \\s1 v4 Add Filterexemption 224
+Dhcp Server \\s1 v4 Add Filterexemption 225
+Dhcp Server \\s1 v4 Add Filterexemption 226
+Dhcp Server \\s1 v4 Add Filterexemption 227
+Dhcp Server \\s1 v4 Add Filterexemption 228
+Dhcp Server \\s1 v4 Add Filterexemption 229
+Dhcp Server \\s1 v4 Add Filterexemption 230
+Dhcp Server \\s1 v4 Add Filterexemption 231
+Dhcp Server \\s1 v4 Add Filterexemption 232
+Dhcp Server \\s1 v4 Add Filterexemption 233
+Dhcp Server \\s1 v4 Add Filterexemption 234
+Dhcp Server \\s1 v4 Add Filterexemption 235
+Dhcp Server \\s1 v4 Add Filterexemption 236
+Dhcp Server \\s1 v4 Add Filterexemption 237
+Dhcp Server \\s1 v4 Add Filterexemption 238
+Dhcp Server \\s1 v4 Add Filterexemption 239
+Dhcp Server \\s1 v4 Add Filterexemption 240
+Dhcp Server \\s1 v4 Add Filterexemption 241
+Dhcp Server \\s1 v4 Add Filterexemption 242
+Dhcp Server \\s1 v4 Add Filterexemption 243
+Dhcp Server \\s1 v4 Add Filterexemption 244
+Dhcp Server \\s1 v4 Add Filterexemption 245
+Dhcp Server \\s1 v4 Add Filterexemption 246
+Dhcp Server \\s1 v4 Add Filterexemption 247
+Dhcp Server \\s1 v4 Add Filterexemption 248
+Dhcp Server \\s1 v4 Add Filterexemption 249
+Dhcp Server \\s1 v4 Add Filterexemption 250
+Dhcp Server \\s1 v4 Add Filterexemption 251
+Dhcp Server \\s1 v4 Add Filterexemption 252
+Dhcp Server \\s1 v4 Add Filterexemption 253
+Dhcp Server \\s1 v4 Add Filterexemption 254
+Dhcp Server \\s1 v4 Add Filterexemption 255
+
+# =====================================
+#     Конец добавления фильтра            
+# =====================================
+
+
+# =============================================
+#     Начало добавления определения параметра      
+# =============================================
+
+
+Dhcp Server \\s1 Add Optiondef 121 "Бесклассовые статические маршруты" BINARY 0 comment="IP-адреса назначения, маски и маршрутизаторов в порядке приоритета" 
+Dhcp Server \\s1 Add Optiondef 1 "Маска подсети" IPADDRESS 0 comment="Маска подсети в сетевом порядке байтов" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 2 "Смещение времени" DWORD 0 comment="Смещение относительно времени UTC в секундах" 0
+Dhcp Server \\s1 Add Optiondef 3 "Маршрутизатор" IPADDRESS 1 comment="Массив адресов маршрутизаторов в порядке предпочтения" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 4 "Сервер времени" IPADDRESS 1 comment="Массив адресов сервера времени в порядке предпочтения" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 5 "Серверы имен" IPADDRESS 1 comment="Массив серверов имен [IEN 116] в порядке предпочтения" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 6 "DNS-серверы" IPADDRESS 1 comment="Массив DNS-серверов в порядке предпочтения" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 7 "Серверы журналов" IPADDRESS 1 comment="Массив серверов регистрации MIT_LCS UDP в подсети" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 8 "Cookie-серверы" IPADDRESS 1 comment="Массив Cookie-серверов, соответствующих RFC 865" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 9 "LPR-серверы" IPADDRESS 1 comment="Массив серверов печати, соответствующих RFC 1179, в порядке предпочтения" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 10 "Impress-серверы" IPADDRESS 1 comment="Массив серверов Imagen Impress" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 11 "Серверы размещения ресурсов" IPADDRESS 1 comment="Массив серверов, соответствующих RFC 887 размещения ресурсов в подсети, в порядке предпочтения" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 12 "Имя узла" STRING 0 comment="Имя узла для клиента, набор символов должен соответствовать RFC 1035" ""
+Dhcp Server \\s1 Add Optiondef 13 "Размер файла загрузки" WORD 0 comment="Размер файла образа загрузки, в блоках по 512 байтов" 0
+Dhcp Server \\s1 Add Optiondef 14 "Файл дампа" STRING 0 comment="Путь и имя файла аварийного дампа" ""
+Dhcp Server \\s1 Add Optiondef 15 "DNS-имя домена" STRING 0 comment="DNS-имя домена для разрешений клиентов" ""
+Dhcp Server \\s1 Add Optiondef 16 "Сервер обмена" IPADDRESS 0 comment="Адрес сервера клиентского обмена" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 17 "Корневой путь" STRING 0 comment="Путь для корневого диска клиента, набор символов NVT ASCII" ""
+Dhcp Server \\s1 Add Optiondef 18 "Путь расширений" STRING 0 comment="TFTP-файл для необязательных расширений" ""
+Dhcp Server \\s1 Add Optiondef 19 "Уровень IP-перенаправления" BYTE 0 comment="Включение или отключение перенаправления IP-пакетов на этом клиенте" 0
+Dhcp Server \\s1 Add Optiondef 20 "Маршрутизация нелокальных датаграмм" BYTE 0 comment="Включение или отключение маршрутизации нелокальных датаграмм" 0
+Dhcp Server \\s1 Add Optiondef 21 "Маски фильтров политики" IPADDRESS 1 comment="Пары IP-адресов "место назначения/маска" для фильтрации маршрутов источников" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 22 "Макс. размер датаграмм для разбора" WORD 0 comment="Максимальный размер датаграммы для разбора клиентом; не более 576" 0
+Dhcp Server \\s1 Add Optiondef 23 "Срок жизни для IP по умолчанию" BYTE 0 comment="Стандартный срок жизни (TTL) для исходящих датаграмм клиента" 0
+Dhcp Server \\s1 Add Optiondef 24 "Время устаревания MTU" DWORD 0 comment="Время в секундах для значения устаревания MTU на пути следования; см. RFC 1191" 0
+Dhcp Server \\s1 Add Optiondef 25 "Таблица PMTU" WORD 1 comment="Отсортированные значения обнаружения MTU на пути следования; должны быть >= 68" 0
+Dhcp Server \\s1 Add Optiondef 26 "MTU" WORD 0 comment="Размер для определения MTU, должен быть >= 68" 0
+Dhcp Server \\s1 Add Optiondef 27 "Все подсети являются локальными" BYTE 0 comment="Клиент предполагает, что все подсети являются локальными" 0
+Dhcp Server \\s1 Add Optiondef 28 "Широковещательный адрес" IPADDRESS 0 comment="Широковещательный адрес" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 29 "Выполнять определение маски" BYTE 0 comment="Клиент должен использовать ICMP для определения маски подсети." 0
+Dhcp Server \\s1 Add Optiondef 30 "Предоставление маски" BYTE 0 comment="Клиент должен отвечать по протоколу ICMP на запросы о маске подсети." 0
+Dhcp Server \\s1 Add Optiondef 31 "Обнаружение маршрутизатора" BYTE 0 comment="Клиент должен запрашивать маршрутизаторы, соответствующие RFC 1256." 0
+Dhcp Server \\s1 Add Optiondef 32 "Адрес запроса маршрутизаторов" IPADDRESS 0 comment="Адрес, используемый для запроса маршрутизаторов" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 33 "Статический параметр маршрута" IPADDRESS 1 comment="Пары адресов "назначение/маршрутизатор", в порядке приоритета" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 34 "Инкапсуляция трейлеров" BYTE 0 comment="Клиент должен согласовать использование трейлеров (RFC 983)." 0
+Dhcp Server \\s1 Add Optiondef 35 "Время ожидания для кэша ARP" DWORD 0 comment="Время ожидания (в секундах) для записей кэша ARP" 0
+Dhcp Server \\s1 Add Optiondef 36 "Инкапсуляция Ethernet" BYTE 0 comment="0=> клиент должен использовать Ethernet V2; 1=> IEEE 802.3" 0
+Dhcp Server \\s1 Add Optiondef 37 "Срок жизни по умолчанию для TCP" BYTE 0 comment="Срок жизни, используемый при отправке сегментов TCP" 0
+Dhcp Server \\s1 Add Optiondef 38 "Интервал проверки активности" DWORD 0 comment="Время проверки активности в секундах" 0
+Dhcp Server \\s1 Add Optiondef 39 "Доп. байт сообщения об активности" BYTE 0 comment="Отправка лишнего байта в сообщении поддержки активности" 0
+Dhcp Server \\s1 Add Optiondef 40 "Доменное имя NIS" STRING 0 comment="Имя домена службы NIS" ""
+Dhcp Server \\s1 Add Optiondef 41 "NIS-серверы" IPADDRESS 1 comment="Адреса NIS-серверов в подсети клиента" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 42 "NTP-серверы" IPADDRESS 1 comment="Адреса NTP-серверов" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 43 "Сведения о конкретном поставщике" BINARY 0 comment="Встроенные параметры, характерные для поставщика" 
+Dhcp Server \\s1 Add Optiondef 44 "WINS/NBNS-серверы" IPADDRESS 1 comment="Адреса NBNS-серверов в порядке предпочтения" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 45 "NetBIOS через TCP/IP NBDD" IPADDRESS 1 comment="Адреса серверов NetBIOS через TCP/IP NBDD в порядке предпочтения" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 46 "Тип узла WINS/NBT" BYTE 0 comment="0x1 = b-узел, 0x2 = p-узел, 0x4 = m-узел, 0x8 = h-узел" 0
+Dhcp Server \\s1 Add Optiondef 47 "Код области NetBIOS" STRING 0 comment="Код области NetBIOS через TCP/IP" ""
+Dhcp Server \\s1 Add Optiondef 48 "Системный шрифт X Window" IPADDRESS 1 comment="Массив серверов шрифтов X Window" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 49 "Системный экран X Window" IPADDRESS 1 comment="Массив серверов управления экраном X Window" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 51 "Аренда" DWORD 0 comment="Время аренды IP-адреса клиентом (в сек)" 0
+Dhcp Server \\s1 Add Optiondef 58 "Время обновления (T1)" DWORD 0 comment="Время от назначения адреса до перехода в состояние RENEWING" 0
+Dhcp Server \\s1 Add Optiondef 59 "Время перепривязки (T2)" DWORD 0 comment="Время от назначения адреса до перехода в состояние REBINDING" 0
+Dhcp Server \\s1 Add Optiondef 64 "Имя домена NIS+" STRING 0 comment="Имя домена NIS+ клиента." ""
+Dhcp Server \\s1 Add Optiondef 65 "Серверы NIS+" IPADDRESS 1 comment="Список IP-адресов серверов NIS+" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 66 "Имя узла сервера загрузки" STRING 0 comment="Имя узла сервера загрузки TFTP" ""
+Dhcp Server \\s1 Add Optiondef 67 "Имя файла загрузки" STRING 0 comment="Имя файла загрузки" ""
+Dhcp Server \\s1 Add Optiondef 68 "Агенты подвижного IP-адреса" IPADDRESS 1 comment="Агенты подвижного IP-адреса в порядке предпочтения" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 69 "SMTP-серверы (Simple Mail Transport Protocol)" IPADDRESS 1 comment="Список SMTP-серверов, доступных для клиента" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 70 "POP3-серверы (Post Office Protocol)" IPADDRESS 1 comment="Список POP3-серверов, доступных для клиента" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 71 "NNTP-серверы (Network News Transport Protocol)" IPADDRESS 1 comment="Список NNTP-серверов, доступных для клиента" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 72 "WWW-серверы (World Wide Web)" IPADDRESS 1 comment="Список WWW-серверов, доступных для клиента" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 73 "Finger-серверы" IPADDRESS 1 comment="Список Finger-серверов, доступных для клиента" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 74 "IRC-серверы (Internet Relay Chat)" IPADDRESS 1 comment="Список IRC-серверов, доступных для клиента" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 75 "StreetTalk-серверы" IPADDRESS 1 comment="Список StreetTalk-серверов, доступных для клиента" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 76 "STDA-серверы (StreetTalk Directory Assistance)" IPADDRESS 1 comment="Список STDA-серверов, доступных для клиента" 0.0.0.0
+Dhcp Server \\s1 Add Optiondef 1 "Параметр Microsoft отключения NetBIOS " DWORD 0 vendor="Параметры Microsoft" comment="Параметр включения или отключения NetBIOS для клиентов Microsoft Windows 2000" 1
+Dhcp Server \\s1 Add Optiondef 2 "Параметр Microsoft освобождения DHCP-аренды при завершении" DWORD 0 vendor="Параметры Microsoft" comment="Параметр для включения или отключения освобождения DHCP-аренды при завершении работы клиентами Windows 2000" 1
+Dhcp Server \\s1 Add Optiondef 3 "Основная метрика маршрутизатора по умолчанию" DWORD 0 vendor="Параметры Microsoft" comment="Основная метрика маршрутизатора по умолчанию для клиентов Microsoft Windows 2000" 1
+Dhcp Server \\s1 Add Optiondef 1 "Параметр Microsoft отключения NetBIOS " DWORD 0 vendor="Параметры Microsoft Windows 2000" comment="Параметр включения или отключения NetBIOS для клиентов Microsoft Windows 2000" 1
+Dhcp Server \\s1 Add Optiondef 2 "Параметр Microsoft освобождения DHCP-аренды при завершении" DWORD 0 vendor="Параметры Microsoft Windows 2000" comment="Параметр для включения или отключения освобождения DHCP-аренды при завершении работы клиентами Windows 2000" 1
+Dhcp Server \\s1 Add Optiondef 3 "Основная метрика маршрутизатора по умолчанию" DWORD 0 vendor="Параметры Microsoft Windows 2000" comment="Основная метрика маршрутизатора по умолчанию для клиентов Microsoft Windows 2000" 0
+
+# =============================================
+#     Конец добавления определения параметра      
+# =============================================
+
+
+# =============================================
+#     Начало установки значения параметра      
+# =============================================
+
+
+# =============================================
+#     Конец установки значения параметра      
+# =============================================
+
+
+Dhcp Server \\s1 Set AuditLog path = "C:\Windows\system32\dhcp" maxsize = 70 minsize = 20 interval = 50 mode = ENABLE
+Dhcp Server \\s1 Set Bindings interface = "Ethernet" mode = ENABLE
+Dhcp Server \\s1 v4 Set NameProtection enable= 0
+Dhcp Server \\s1 Set DnsConfig 1 0 1 0
+Dhcp Server \\s1 Set DatabaseBackupInterval 60
+Dhcp Server \\s1 Set DatabaseBackupPath "C:\Windows\system32\dhcp\backup"
+Dhcp Server \\s1 Set DatabaseCleanupInterval 60
+Dhcp Server \\s1 Set DatabaseLoggingFlag 1
+Dhcp Server \\s1 Set DatabaseName "dhcp.mdb"
+Dhcp Server \\s1 Set DatabasePath "C:\Windows\system32\dhcp"
+Dhcp Server \\s1 Set DatabaseRestoreFlag 0
+Dhcp Server \\s1 Set DetectConflictRetry 0
+
+# =============================================
+#     Начало добавления новой области      
+# =============================================
+
+Dhcp Server \\s1 add scope 10.0.0.0 255.0.0.0 "1" "LABA"
+Dhcp Server \\s1 Scope 10.0.0.0 set state 1
+Dhcp Server \\s1 Scope 10.0.0.0 set delayoffer 0
+
+# ============================================================================
+# Начало добавления IP-диапазона
+# к области 10.0.0.0, сервера s1
+# ============================================================================
+
+
+Dhcp Server \\s1 Scope 10.0.0.0 Add iprange 10.0.0.100 10.0.0.205 
+Dhcp Server \\s1 scope 10.0.0.0 set napstate Off
+
+# ============================================================================
+# Конец добавления IP-диапазона
+# к области 10.0.0.0, сервера s1
+# ============================================================================
+
+
+# =============================================================================
+# Начало добавления исключаемого IP-диапазона
+# к области 10.0.0.0, сервера s1
+# =============================================================================
+
+
+Dhcp Server \\s1 Scope 10.0.0.0 add excluderange 10.0.0.195 10.0.0.200
+
+# =============================================================================
+# Конец добавления исключаемого IP-диапазона
+# к области 10.0.0.0, сервера s1
+# =============================================================================
+
+
+# =============================================================================
+# Начало добавления значений параметра
+# к области 10.0.0.0, сервера s1
+# =============================================================================
+
+
+Dhcp Server \\s1 Scope 10.0.0.0 set optionvalue 51 DWORD "3600" 
+Dhcp Server \\s1 Scope 10.0.0.0 set optionvalue 3 IPADDRESS "10.10.10.10" 
+Dhcp Server \\s1 Scope 10.0.0.0 set optionvalue 15 STRING "YVV.loc" 
+Dhcp Server \\s1 Scope 10.0.0.0 set optionvalue 6 IPADDRESS "10.10.10.10" 
+
+# =============================================================================
+# Конец добавления значений параметра
+# к области 10.0.0.0, сервера s1
+# =============================================================================
+
+
+# ============================================================================
+# Начало добавления зарезервированных IP-адресов
+# к области 10.0.0.0, сервера s1
+# ============================================================================
+
+
+Dhcp Server \\s1 Scope 10.0.0.0 Add reservedip 10.0.0.199 000102030405 "2.6" "" "BOTH"
+Dhcp Server \\s1 v4 Scope 10.0.0.0 Set NameProtection enable= 0
+Dhcp Server \\s1 Scope 10.0.0.0 Set DnsConfig 1 0 1 0
+
+# ============================================================================
+# Конец добавления зарезервированных IP-адресов
+# к области 10.0.0.0, сервера s1
+# ============================================================================
+
+
+
+# =============================================
+#     Конец добавления новой области      
+# =============================================
+
+
+# =====================================
+#     Добавление суперобласти                  
+# =====================================
+
+
+# =====================================
+#     Конец добавления суперобласти               
+# =====================================
+
+# ============================================
+#     Добавление многоадресной области
+# ============================================
+
+
+
+# ============================================
+#     Конец добавления многоадресной области
+# ============================================
+
+
+# ==============================================================
+#  Конец параметров настройки сервера s1                   
+# ==============================================================
+
+
+
+
+# ==============================================================
+#  Сведения о конфигурации V6 для сервера s1                   
+# ==============================================================
+
+
+
+# =====================================
+#     Начало добавления классов                     
+# =====================================
+
+Dhcp Server \\s1 v6 Add Class "Параметры Microsoft Windows" "Параметры поставщиков Microsoft для клиентов Windows" 4d53465420352e30 1 b 311
+
+# =====================================
+#     Конец добавления классов                     
+# =====================================
+
+
+# =============================================
+#     Начало добавления определения параметра      
+# =============================================
+
+
+Dhcp Server \\s1 v6 Add Optiondef 21 "Список доменных имен SIP-серверов " STRING 1 comment="Доменные имена SIP-серверов, доступных клиенту " ""
+Dhcp Server \\s1 v6 Add Optiondef 24 "Список поиска доменов " STRING 1 comment="Список поиска доменов, используемый клиентами для разрешения имен узлов в DNS, в порядке предпочтения " ""
+Dhcp Server \\s1 v6 Add Optiondef 29 "Список доменов NIS" STRING 1 comment="Доменные имена NIS-серверов, доступных клиенту " ""
+Dhcp Server \\s1 v6 Add Optiondef 30 "Список имен доменов NIS+ " STRING 1 comment="Доменные имена серверов NIS+, доступных клиенту " ""
+Dhcp Server \\s1 v6 Add Optiondef 22 "Список IPv6-адресов SIP-серверов " IPV6ADDRESS 1 comment="IPv6-адреса доступных клиенту " ""
+Dhcp Server \\s1 v6 Add Optiondef 23 "Список IPv6-адресов рекурсивных DNS-серверов " IPV6ADDRESS 1 comment="IPv6-адреса доступных клиенту " ""
+Dhcp Server \\s1 v6 Add Optiondef 27 "Список IPv6-адресов NIS " IPV6ADDRESS 1 comment="IPv6-адреса NIS-серверов, доступных клиенту " ""
+Dhcp Server \\s1 v6 Add Optiondef 28 "Список IPv6-адресов NIS+ " IPV6ADDRESS 1 comment="IPv6-адреса серверов NIS+, доступных клиенту " ""
+Dhcp Server \\s1 v6 Add Optiondef 31 "Список IPv6-адресов SNTP-серверов " IPV6ADDRESS 1 comment="IPv6-адреса SNTP-серверов, доступных клиенту " ""
+Dhcp Server \\s1 v6 Add Optiondef 32 "Время обновления сведений " DWORD 0 comment="Этот параметр определяет верхнюю границу ожидания клиента перед обновлением сведений, полученных от DHCPv6-сервера " 86400
+
+# =============================================
+#     Конец добавления определения параметра      
+# =============================================
+
+
+# =============================================
+#     Начало установки значения параметра      
+# =============================================
+
+Dhcp Server \\s1 v6 Set NameProtection enable= 0
+Dhcp Server \\s1 v6 Set DnsConfig 1 0 1
+
+# =============================================
+#     Конец установки значения параметра      
+# =============================================
+
+
+
+# =============================================
+#     Начало добавления новой области      
+# =============================================
+
+
+# =============================================
+#     Конец добавления новой области      
+# =============================================
+
+
+# ==============================================================
+#  Конец параметров настройки сервера s1                   
+# ==============================================================
+
+
